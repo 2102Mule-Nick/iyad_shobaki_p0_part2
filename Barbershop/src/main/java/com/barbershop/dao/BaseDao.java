@@ -6,7 +6,7 @@ public interface BaseDao<T>{
 	
 	public List<T> findAll();
 	public boolean create(T t);
-	public boolean updateById(int id);
+	public boolean update(T t);
 	public boolean deleteById(int id);
 	
 }

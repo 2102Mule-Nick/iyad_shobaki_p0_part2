@@ -4,16 +4,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 public final class ConnectionFactoryPostgres {
-	
-	//Logger log = Logger.getRootLogger();
+
+	private static final String CLASS_NAME = "ConnectionFactoryPostgres";
+
+	Logger log = Logger.getRootLogger();
 
 	public static String URL;
 
 	public static String USERNAME;
 
 	public static String PASSWORD;
-	
+
 	private static ConnectionFactoryPostgres connectionFactory = null;
 
 	private ConnectionFactoryPostgres() {
@@ -22,29 +26,31 @@ public final class ConnectionFactoryPostgres {
 		USERNAME = System.getenv("BARBERSHOP_DB_USERNAME");
 
 		PASSWORD = System.getenv("BARBERSHOP_DB_PASSWORD");
+		
 	}
-	
-	
+
 	public Connection createConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
+			log.error(CLASS_NAME + ".createConnection() -> Failed to load Driver", e);
 			System.out.println("Failed to load Driver");
 		}
 
-		//log.info("URL : " + URL);
+		// log.info("URL : " + URL);
 
 		try {
-			return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			log.info(CLASS_NAME + ".createConnection() -> Connecting to DB succeedded!");
+			return conn;
 		} catch (SQLException e) {
-			//log.error("Failed to connect to DB", e);
+			log.error(CLASS_NAME + ".createConnection() -> Failed to connect to DB", e);
 		}
 		return null;
 	}
-	
 
 	public static synchronized Connection getConnection() {
-		
+
 		if (connectionFactory == null) {
 			connectionFactory = new ConnectionFactoryPostgres();
 		}

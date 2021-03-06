@@ -16,8 +16,8 @@ public class User {
 	}
 
 	// Constructor with parameters
-	public User(String firstName, String lastName, String emailAddress, String phoneNumber, String password,
-			String role) {
+	public User(String firstName, String lastName, String phoneNumber, 
+			String emailAddress,String role,  String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -28,8 +28,8 @@ public class User {
 	}
 
 	// Constructor with parameters
-	public User(int userId, String firstName, String lastName, String emailAddress, String phoneNumber, String password,
-			String role) {
+	public User(int userId,String firstName, String lastName, String phoneNumber, 
+			String emailAddress,String role,  String password) {
 		super();
 		this.userId = userId;
 		this.firstName = firstName;
