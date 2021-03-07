@@ -44,7 +44,7 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 			}
 
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".findAll() -> Failure to connect to DB.");
+			log.error(CLASS_NAME + ".findAll() -> Failure to get all salon services (SQLEXCEPTION)." + e.getMessage());
 		}
 		log.info(CLASS_NAME + ".findAll() -> A list of salon services returned successfully.");
 		return salonServices;
@@ -60,7 +60,7 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		String sql = "insert into salon_service (service_name, description, duration, price)"
 				+ " values (? , ? , ? , ?)";
-
+		
 		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, service.getServiceName());
@@ -68,10 +68,13 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 			stmt.setString(3, service.getDuration());
 			stmt.setFloat(4, service.getPrice());
 			stmt.execute();
+			
 			log.info(CLASS_NAME + ".create() -> Salon service created successfuly.");
 			return true;
+			
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".create() -> Failure to create a new salon service (SQLEXCEPTION).");
+			log.error(
+					CLASS_NAME + ".create() -> Failure to create a new salon service (SQLEXCEPTION)." + e.getMessage());
 		}
 
 		log.error(CLASS_NAME + ".create() -> Unable to create a new salon service.");
@@ -100,7 +103,7 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 			log.info(CLASS_NAME + ".update() -> Salon service updated successfully.");
 			return true;
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".update() -> Failure to update salon service (SQLEXCEPTION).");
+			log.error(CLASS_NAME + ".update() -> Failure to update salon service (SQLEXCEPTION)." + e.getMessage());
 		}
 
 		log.error(CLASS_NAME + ".update() -> Unable to update salon service.");
@@ -123,7 +126,7 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 			log.info(CLASS_NAME + ".deleteById() -> Salon service deleted successfully.");
 			return true;
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".deleteById() -> Failure to delete salon service.");
+			log.error(CLASS_NAME + ".deleteById() -> Failure to delete salon service (SQLEXCEPTION)." + e.getMessage());
 		}
 
 		return false;
@@ -153,7 +156,8 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 			}
 
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".getSalonServiceByName() -> Failure to check for salon service.");
+			log.error(CLASS_NAME + ".getSalonServiceByName() -> Failure to check for salon service (SQLEXCEPTION)."
+					+ e.getMessage());
 			// TODO - Add Exception --- Iyad
 		}
 
@@ -187,10 +191,31 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 			}
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".findAll() -> Failure to connect to DB (SQLEXCEPTION).");
+			log.error(CLASS_NAME + ".findAll() -> Failure to connect to DB (SQLEXCEPTION)." + e.getMessage());
 		}
 		log.info(CLASS_NAME + ".findAll() -> Salon service info returned successfully.");
 		return service;
+	}
+
+	// For testing purpose
+	@Override
+	public void deleteAll() {
+		log.info(CLASS_NAME + ".deleteAll() -> An attempt to delete all salon services.");
+
+		PreparedStatement stmt = null;
+
+		// Delete all except id # 1 to test appointment table Foreign key
+		String sql = "delete from salon_service where service_id != 1";
+
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			stmt = conn.prepareStatement(sql);
+			stmt.execute();
+			log.info(CLASS_NAME + ".deleteAll() -> Salon services deleted successfully.");
+		} catch (SQLException e) {
+			log.error(CLASS_NAME + ".deleteById() -> Failure to delete all salon services (SQLEXCEPTION)."
+					+ e.getMessage());
+		}
+
 	}
 
 }

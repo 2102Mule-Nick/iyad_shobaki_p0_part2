@@ -44,7 +44,7 @@ public class UserDaoPostgres implements UserDao<User> {
 			}
 
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".findAll() -> Failure to connect to DB.");
+			log.error(CLASS_NAME + ".findAll() -> Failure to get all users (SQLEXCEPTION)." + e.getMessage());
 		}
 		log.info(CLASS_NAME + ".findAll() -> A list of users returned successfully.");
 		return users;
@@ -68,10 +68,12 @@ public class UserDaoPostgres implements UserDao<User> {
 			stmt.setString(5, user.getRole());
 			stmt.setString(6, user.getPassword());
 			stmt.execute();
+			
 			log.info(CLASS_NAME + ".create() -> User created successfuly.");
 			return true;
+			
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".create() -> Failure to create a new user account (SQLEXCEPTION).");
+			log.error(CLASS_NAME + ".create() -> Failure to create a new user account (SQLEXCEPTION)." + e.getMessage());
 		}
 		
 		log.error(CLASS_NAME + ".create() -> Unable to create a new user account.");
@@ -100,7 +102,7 @@ public class UserDaoPostgres implements UserDao<User> {
 			log.info(CLASS_NAME + ".update() -> User updated successfully.");
 			return true;
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".update() -> Failure to update user account (SQLEXCEPTION).");
+			log.error(CLASS_NAME + ".update() -> Failure to update user account (SQLEXCEPTION)." + e.getMessage());
 		}
 
 		log.error(CLASS_NAME + ".update() -> Unable to update user account.");
@@ -122,7 +124,7 @@ public class UserDaoPostgres implements UserDao<User> {
 			log.info(CLASS_NAME + ".deleteById() -> User deleted successfully.");
 			return true;
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".deleteById() -> Failure to delete user account (SQLEXCEPTION).");
+			log.error(CLASS_NAME + ".deleteById() -> Failure to delete user account (SQLEXCEPTION)." + e.getMessage());
 		}
 		
 		log.error(CLASS_NAME + ".deleteById() -> Unable to delete user account.");
@@ -143,7 +145,7 @@ public class UserDaoPostgres implements UserDao<User> {
 			stmt.setString(1, username);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
-				log.info(CLASS_NAME + ".isExist() -> Username already exist.");
+				log.info(CLASS_NAME + ".isExist() -> Username is already exist.");
 				return true;
 			} else {
 				log.info(CLASS_NAME + ".isExist() -> Username is not exist.");
@@ -151,7 +153,7 @@ public class UserDaoPostgres implements UserDao<User> {
 			}
 
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".isExist() -> Failure to check for user.");
+			log.error(CLASS_NAME + ".isExist() -> Failure to check for user (SQLEXCEPTION)." + e.getMessage());
 			// TODO - Add Exception --- Iyad
 			return false;
 		}
@@ -187,7 +189,7 @@ public class UserDaoPostgres implements UserDao<User> {
 			}
 
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".getUserInfo() -> Failure to check for user.");
+			log.error(CLASS_NAME + ".getUserInfo() -> Failure to check for user (SQLEXCEPTION)." + e.getMessage());
 			// TODO - Add Exception --- Iyad
 		}
 
@@ -199,5 +201,26 @@ public class UserDaoPostgres implements UserDao<User> {
 		log.info(CLASS_NAME + ".getUserInfo() -> Invalid username or password.");
 		return null;
 	}
+	
+	// For testing purpose
+		@Override
+		public void deleteAll() {
+			log.info(CLASS_NAME + ".deleteAll() -> An attempt to delete all users.");
+
+			PreparedStatement stmt = null;
+
+			// Delete all except id # 1 to test appointment table Foreign key
+			String sql = "delete from user_acc where user_id != 1";
+
+			try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+				stmt = conn.prepareStatement(sql);
+				stmt.execute();
+				log.info(CLASS_NAME + ".deleteAll() -> Users deleted successfully.");
+			} catch (SQLException e) {
+				log.error(CLASS_NAME + ".deleteById() -> Failure to delete all users (SQLEXCEPTION)."
+						+ e.getMessage());
+			}
+
+		}
 
 }

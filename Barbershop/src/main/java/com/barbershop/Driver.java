@@ -1,9 +1,14 @@
 package com.barbershop;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import com.barbershop.dao.AppointmentDaoPostgres;
 import com.barbershop.dao.BaseDao;
 import com.barbershop.dao.SalonServiceDaoPostgres;
 import com.barbershop.dao.UserDaoPostgres;
+import com.barbershop.pojo.Appointment;
 import com.barbershop.pojo.SalonService;
 import com.barbershop.pojo.User;
 
@@ -60,23 +65,46 @@ public class Driver {
 //		 System.out.println(teBaseDao.getSalonServiceByName("Mens Haircut"));
 //		 System.out.println(teBaseDao.getSalonServiceByName("test"));
 
+		
+		
 		// test Appointment
 
-		// AppointmentDaoPostgres teBaseDao = new AppointmentDaoPostgres();
-		// System.out.println(teBaseDao.findAll());
-		// User testUser = new User("Mike", "Smith", "222-222-1111","mike@smith.com",
-		// "Customer", "1234");
-		// User testUser = new User(3,"Sue", "Storm", "444-333-2222","sue@storm.com",
-		// "Customer", "1234");
-		// teBaseDao.update(testUser);
-		// teBaseDao.create(testUser);
-		// teBaseDao.deleteById(3);
-		// System.out.println(teBaseDao.isExist("iyad@shobaki.com"));
-		// System.out.println(teBaseDao.isExist("iiiii@shobaki.com"));
+//		AppointmentDaoPostgres teBaseDao = new AppointmentDaoPostgres();
+//		//System.out.println(teBaseDao.findAll());
+//
+//		// Test create
+//		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+//		LocalDate date = LocalDate.parse("03-11-2021", dateFormatter);
+//
+//		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
+//		LocalTime time = LocalTime.parse("02:00 PM", timeFormatter);
+//		
+//		System.out.println(date + "  " + time);
+//		Appointment appointment = new Appointment(date, time, 2, 2);
+//		teBaseDao.create(appointment);
 
-		// System.out.println(teBaseDao.getUserInfo("mike@smith.com", "1234"));
-		// System.out.println(teBaseDao.getUserInfo("mike@smith.net", "1234"));
-		// System.out.println(teBaseDao.getUserInfo("mike@smith.com", "1111"));
+		
+		//Test update
+//		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+//		LocalDate date = LocalDate.parse("03-22-2021", dateFormatter);
+//
+//		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
+//		LocalTime time = LocalTime.parse("3:00 PM", timeFormatter);
+//		
+//		System.out.println(date + "  " + time);
+//		Appointment appointment = new Appointment(3,date, time, 2, 2);
+//		teBaseDao.update(appointment);
+
+		 //teBaseDao.deleteById(3);
+		
+		//System.out.println(teBaseDao.getAllAppointmentsByUserId(2));
+
+		// Get appointments by date
+//		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+//		LocalDate date = LocalDate.parse("03-12-2021", dateFormatter);
+//		
+//		System.out.println(teBaseDao.getAllAppointmentsTimeByDate(date));
+		
 	}
 
 }
