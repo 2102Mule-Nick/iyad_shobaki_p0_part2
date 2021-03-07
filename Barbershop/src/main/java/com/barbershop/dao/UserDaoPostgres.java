@@ -21,7 +21,6 @@ public class UserDaoPostgres implements UserDao<User> {
 	public List<User> findAll() {
 
 		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all users.");
-		Connection conn = ConnectionFactoryPostgres.getConnection();
 
 		String sql = "select * from user_acc";
 
@@ -29,7 +28,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		User user = null;
 
-		try {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 
 			users = new ArrayList<>();
 			Statement stmt = conn.createStatement();
@@ -55,14 +54,12 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		log.info(CLASS_NAME + ".create() -> An attempt to create a user with username= " + user.getEmailAddress());
 
-		Connection conn = ConnectionFactoryPostgres.getConnection();
-
 		PreparedStatement stmt = null;
 
 		String sql = "insert into user_acc (first_name, last_name, phone_number, email_address, user_role, user_password)"
 				+ " values (? , ? , ? , ?, ? , ?)";
 
-		try {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
@@ -71,26 +68,26 @@ public class UserDaoPostgres implements UserDao<User> {
 			stmt.setString(5, user.getRole());
 			stmt.setString(6, user.getPassword());
 			stmt.execute();
-			conn.close();
 			log.info(CLASS_NAME + ".create() -> User created successfuly.");
 			return true;
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".create() -> Failure to create a new user account.");
+			log.error(CLASS_NAME + ".create() -> Failure to create a new user account (SQLEXCEPTION).");
 		}
+		
+		log.error(CLASS_NAME + ".create() -> Unable to create a new user account.");
 		return false;
 	}
 
 	public boolean update(User user) {
 
 		log.info(CLASS_NAME + ".update() -> An attempt to update a user with username= " + user.getEmailAddress());
-		Connection conn = ConnectionFactoryPostgres.getConnection();
 
 		PreparedStatement stmt = null;
 
 		String sql = "update user_acc set first_name = ?, last_name = ?, phone_number = ?, "
 				+ "email_address = ?, user_role = ?, user_password = ?  where user_id = ?";
 
-		try {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
@@ -100,13 +97,13 @@ public class UserDaoPostgres implements UserDao<User> {
 			stmt.setString(6, user.getPassword());
 			stmt.setInt(7, user.getUserId());
 			stmt.execute();
-			conn.close();
 			log.info(CLASS_NAME + ".update() -> User updated successfully.");
 			return true;
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".update() -> Failure to update user.");
+			log.error(CLASS_NAME + ".update() -> Failure to update user account (SQLEXCEPTION).");
 		}
 
+		log.error(CLASS_NAME + ".update() -> Unable to update user account.");
 		return false;
 	}
 
@@ -114,23 +111,21 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		log.info(CLASS_NAME + ".deleteById() -> An attempt to delete a user with id= " + id);
 
-		Connection conn = ConnectionFactoryPostgres.getConnection();
-
 		PreparedStatement stmt = null;
 
 		String sql = "delete from user_acc where user_id = ?";
 
-		try {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			stmt.execute();
-			conn.close();
 			log.info(CLASS_NAME + ".deleteById() -> User deleted successfully.");
 			return true;
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".deleteById() -> Failure to delete user.");
+			log.error(CLASS_NAME + ".deleteById() -> Failure to delete user account (SQLEXCEPTION).");
 		}
-
+		
+		log.error(CLASS_NAME + ".deleteById() -> Unable to delete user account.");
 		return false;
 	}
 
@@ -139,75 +134,69 @@ public class UserDaoPostgres implements UserDao<User> {
 		log.info(CLASS_NAME + ".isExist() -> An attempt to check if a user with username= " + username
 				+ " is exist or not.");
 
-		Connection conn = ConnectionFactoryPostgres.getConnection();
-
 		PreparedStatement stmt = null;
 
 		String sql = "select * from user_acc where email_address = ?";
 
-		try {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			ResultSet rs = stmt.executeQuery();
-			conn.close();
-			if(rs.next()) {
+			if (rs.next()) {
 				log.info(CLASS_NAME + ".isExist() -> Username already exist.");
 				return true;
-			}else {
+			} else {
 				log.info(CLASS_NAME + ".isExist() -> Username is not exist.");
 				return false;
 			}
-			
+
 		} catch (SQLException e) {
 			log.error(CLASS_NAME + ".isExist() -> Failure to check for user.");
-			//TODO - Add Exception --- Iyad
+			// TODO - Add Exception --- Iyad
 			return false;
 		}
-	
+
 	}
 
 	public User getUserInfo(String username, String password) {
-		
+
 		log.info(CLASS_NAME + ".getUserInfo() -> An attempt to get user with username= " + username);
-		if(isExist(username) == false) {
+		if (isExist(username) == false) {
 			log.info(CLASS_NAME + ".getUserInfo() -> User with username= " + username + " is not exist.");
 			return null;
 		}
-		
-		Connection conn = ConnectionFactoryPostgres.getConnection();
-		User user =null;
+
+		User user = null;
 
 		PreparedStatement stmt = null;
 
 		String sql = "select * from user_acc where email_address = ? and user_password = ?";
 
-		try {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();
-			conn.close();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
-				user = new User(rs.getInt("user_id"), rs.getString("first_name"),
-						rs.getString("last_name"),rs.getString("phone_number"),
-						rs.getString("email_address"),rs.getString("user_role"),
+				user = new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"),
+						rs.getString("phone_number"), rs.getString("email_address"), rs.getString("user_role"),
 						rs.getString("user_password"));
-				
+
 			}
-			
+
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".isExist() -> Failure to check for user.");
-			//TODO - Add Exception --- Iyad			
+			log.error(CLASS_NAME + ".getUserInfo() -> Failure to check for user.");
+			// TODO - Add Exception --- Iyad
 		}
-		
-		if(user != null && user.getEmailAddress().equals(username) && user.getPassword().equals(password)) {
+
+		if (user != null && user.getEmailAddress().equals(username) && user.getPassword().equals(password)) {
 			log.info(CLASS_NAME + ".getUserInfo() -> User info returned successfully. Valid username and password.");
 			return user;
 		}
-		
-		log.warn(CLASS_NAME + ".getUserInfo() -> Failure to return user info. Invalid username or password.");
+
+		log.info(CLASS_NAME + ".getUserInfo() -> Invalid username or password.");
 		return null;
 	}
 

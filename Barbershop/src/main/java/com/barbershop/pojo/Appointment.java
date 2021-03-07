@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Appointment {
+	
 	private int appointmentId;
 	private LocalDate appointmentDate;
 	private LocalTime appointmentTime;

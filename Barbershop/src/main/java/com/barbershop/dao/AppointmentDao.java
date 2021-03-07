@@ -7,8 +7,8 @@ import java.util.List;
 public interface AppointmentDao<Appointment> extends BaseDao<Appointment> {
 	
 	//public List<LocalDate> getAllAppointmentsDates();
-	//public List<LocalTime> getAllAppointmentsTimeByDate(LocalDate date);
-	public boolean isAppointmentExist(LocalDate date, LocalTime time);
-	public List<Appointment> getAllAppointmentByUserId(int id);
+	public List<LocalTime> getAllAppointmentsTimeByDate(LocalDate date);
+	//public boolean isAppointmentExist(LocalDate date, LocalTime time);
+	public List<Appointment> getAllAppointmentsByUserId(int id);
 	
 }

@@ -1,13 +1,13 @@
 package com.barbershop.pojo;
 
 public class SalonService {
-	
+
 	private int serviceId;
 	private String serviceName;
 	private String description;
 	private String duration;
 	private float price;
-	
+
 	// Default constructor
 	public SalonService() {
 		super();
@@ -21,7 +21,7 @@ public class SalonService {
 		this.duration = duration;
 		this.price = price;
 	}
-	
+
 	// Constructor with parameters
 	public SalonService(int serviceId, String serviceName, String description, String duration, float price) {
 		super();
@@ -68,14 +68,12 @@ public class SalonService {
 	public int getServiceId() {
 		return serviceId;
 	}
-	
+
 	// Override methods
 	@Override
 	public String toString() {
-		return "Salon Service [Service Name= " + getServiceName() +
-				", Description=" + getDescription() + 
-				", Duration= " + getDuration() +
-				", Price= " + getPrice() + "]";
+		return "Salon Service [Service Name= " + getServiceName() + ", Description=" + getDescription() + ", Duration= "
+				+ getDuration() + ", Price= " + getPrice() + "]";
 	}
-	
+
 }
