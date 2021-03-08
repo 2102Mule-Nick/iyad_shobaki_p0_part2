@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 
 import com.barbershop.dao.SalonServiceDaoPostgres;
 import com.barbershop.pojo.SalonService;
-import com.barbershop.pojo.User;
 
 public class SalonServiceServiceImpl implements SalonServiceService<SalonService> {
 
