@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService<User> {
 
 	@Override
 	public boolean update(User user) {
+		
 		if(user == null || user.getUserId() < 1) {
 			log.error(CLASS_NAME + ".update() -> Failure to update user account with id = " + user.getUserId());
 			return false;
