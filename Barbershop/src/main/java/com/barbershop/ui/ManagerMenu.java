@@ -10,7 +10,11 @@ public class ManagerMenu implements Menu {
 	}
 
 	public void displayOptions(Scanner scanner) {
-		// TODO Auto-generated method stub
+		
+		System.out.println("\t------------    -------------------------------------     ------------");
+		System.out.println("\t------------         Welcome To The Manager Menu            ------------");
+		System.out.println("\t------------    -------------------------------------     ------------");
+
 
 	}
 

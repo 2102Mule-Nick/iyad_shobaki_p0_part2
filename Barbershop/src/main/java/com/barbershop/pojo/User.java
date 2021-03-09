@@ -7,29 +7,26 @@ public class User {
 	private String emailAddress;
 	private String phoneNumber;
 	private String password;
-	private String role;
-	
-	
+	private String role = "Customer";
+
 	// Default constructor
 	public User() {
 		super();
 	}
 
 	// Constructor with parameters
-	public User(String firstName, String lastName, String phoneNumber, 
-			String emailAddress,String role,  String password) {
+	public User(String firstName, String lastName, String phoneNumber, String emailAddress, String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
 		this.password = password;
-		this.role = role;
 	}
 
 	// Constructor with parameters
-	public User(int userId,String firstName, String lastName, String phoneNumber, 
-			String emailAddress,String role,  String password) {
+	public User(int userId, String firstName, String lastName, String phoneNumber, String emailAddress, String role,
+			String password) {
 		super();
 		this.userId = userId;
 		this.firstName = firstName;
@@ -96,12 +93,8 @@ public class User {
 	// Override methods
 	@Override
 	public String toString() {
-		return "User [First Name= " + getFirstName() +
-				", Last Name= " + getLastName() + 
-				", Email Address= " + getEmailAddress() +
-				", role= " + getRole() + "]";
+		return "User [Id= " + getUserId() + ", First Name= " + getFirstName() + ", Last Name= " + getLastName() + ", Email Address= "
+				+ getEmailAddress() + ", role= " + getRole() + "]";
 	}
-	
-	
-	
+
 }

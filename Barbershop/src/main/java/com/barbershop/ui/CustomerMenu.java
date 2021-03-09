@@ -10,7 +10,10 @@ public class CustomerMenu implements Menu {
 	}
 
 	public void displayOptions(Scanner scanner) {
-		// TODO Auto-generated method stub
+
+		System.out.println("\t------------    -------------------------------------     ------------");
+		System.out.println("\t------------         Welcome To The Customer Menu            ------------");
+		System.out.println("\t------------    -------------------------------------     ------------");
 
 	}
 

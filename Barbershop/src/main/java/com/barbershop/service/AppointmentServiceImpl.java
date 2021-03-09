@@ -30,6 +30,7 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 		try {			
 			List<Appointment> appointments = AppointmentDao.findAll();
 			System.out.println("All appointments info returned successfully.");
+			log.info("----------------------------------------------------------------------");
 			return appointments;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");

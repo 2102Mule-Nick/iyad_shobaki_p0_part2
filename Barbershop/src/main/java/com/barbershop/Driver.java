@@ -1,53 +1,72 @@
 package com.barbershop;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-import com.barbershop.dao.AppointmentDaoPostgres;
-import com.barbershop.dao.BaseDao;
-import com.barbershop.dao.SalonServiceDaoPostgres;
 import com.barbershop.dao.UserDaoPostgres;
-import com.barbershop.pojo.Appointment;
-import com.barbershop.pojo.SalonService;
 import com.barbershop.pojo.User;
-
-import junit.framework.Test;
+import com.barbershop.service.UserServiceImpl;
+import com.barbershop.ui.CustomerMenu;
+import com.barbershop.ui.LoginMenu;
+import com.barbershop.ui.ManagerMenu;
+import com.barbershop.ui.Menu;
+import com.barbershop.ui.RegistrationMenu;
+import com.barbershop.ui.WelcomeMenu;
 
 public class Driver {
 
 	public static Scanner scanner = new Scanner(System.in);
+	public static User user = new User();
 
 	public static void main(String[] args) {
 
-		System.out.println("Please enter a date in format mm/dd/yyyy and should be between today's date and 30 days from now: ");
+		System.out.println("\t------------    Welcome To The Barbershop Application     ------------");
+		System.out.println("\t------------    -------------------------------------     ------------");
+		System.out.println("\t------------    -------------------------------------     ------------");
 
-		LocalDate date = null;
-		boolean flag = true;
+		UserDaoPostgres userDao = new UserDaoPostgres();
+
+		UserServiceImpl userServiceImpl = new UserServiceImpl(userDao);
+		
+		CustomerMenu customerMenu = new CustomerMenu();
+		ManagerMenu managerMenu = new ManagerMenu();		
+		LoginMenu loginMenu = new LoginMenu(user, userServiceImpl, customerMenu, managerMenu);
+		RegistrationMenu registrationMenu = new RegistrationMenu(user, userServiceImpl, loginMenu);
+		WelcomeMenu welcomeMenu = new WelcomeMenu(loginMenu, registrationMenu);
+
+		Menu nextMenu = welcomeMenu;
+
 		do {
-			
-			while (!scanner.hasNext("([0-9]{2})/([0-9]{2})/([0-9]{4})")) {
-				System.out.println("Invalid input. Please try again:");
-				scanner.nextLine();
-			}
+			nextMenu.displayOptions(scanner);
 
-			String dateString = scanner.nextLine();
-
-			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-			date = LocalDate.parse(dateString, dateFormatter);			
-			if (!date.isBefore(LocalDate.now()) && !date.isAfter(LocalDate.now().plusMonths(1))) {
-				flag = false;
-			}else {
-				System.out.println("Invalid input. Please try again (date should be between today's date and 30 days from now):");
-			}
-		} while (flag);
-
-		System.out.println(date);
+			nextMenu = nextMenu.advance();
+		} while (nextMenu != null);
 
 	}
 
 }
+
+/*
+ * System.out.
+ * println("Please enter a date in format mm/dd/yyyy and should be between today's date and 30 days from now: "
+ * );
+ * 
+ * LocalDate date = null; boolean flag = true; do {
+ * 
+ * while (!scanner.hasNext("([0-9]{2})/([0-9]{2})/([0-9]{4})")) {
+ * System.out.println("Invalid input. Please try again:"); scanner.nextLine(); }
+ * 
+ * String dateString = scanner.nextLine();
+ * 
+ * DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+ * date = LocalDate.parse(dateString, dateFormatter); if
+ * (!date.isBefore(LocalDate.now()) &&
+ * !date.isAfter(LocalDate.now().plusMonths(1))) { flag = false; }else {
+ * System.out.
+ * println("Invalid input. Please try again (date should be between today's date and 30 days from now):"
+ * ); } } while (flag);
+ * 
+ * System.out.println(date);
+ */
 
 /*
  * 
