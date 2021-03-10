@@ -17,7 +17,12 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 	Logger log = Logger.getRootLogger();
 	private static final String CLASS_NAME = "SalonServiceDaoPostgres";
-	//private static final String DATABASE_ENV = "OriginalDb";
+	
+	private Connection connection;
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
 
 	@Override
 	public List<SalonService> findAll() {
@@ -30,10 +35,11 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		SalonService service = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
 
 			salonServices = new ArrayList<>();
-			Statement stmt = conn.createStatement();
+			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -62,8 +68,9 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 		String sql = "insert into salon_service (service_name, description, duration, price)"
 				+ " values (? , ? , ? , ?)";
 		
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, service.getServiceName());
 			stmt.setString(2, service.getDescription());
 			stmt.setString(3, service.getDuration());
@@ -93,8 +100,9 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 		String sql = "update salon_service set service_name = ?, description = ?, duration = ?, "
 				+ "price = ? where service_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, service.getServiceName());
 			stmt.setString(2, service.getDescription());
 			stmt.setString(3, service.getDuration());
@@ -120,8 +128,9 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		String sql = "delete from salon_service where service_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
 			stmt.execute();
 			log.info(CLASS_NAME + ".deleteById() -> Salon service deleted successfully.");
@@ -144,8 +153,9 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		String sql = "select * from salon_service where service_name = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, name);
 			ResultSet rs = stmt.executeQuery();
 
@@ -180,9 +190,10 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		SalonService service = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
 
-			Statement stmt = conn.createStatement();
+			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -208,8 +219,9 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 		// Delete all except id # 1 to test appointment table Foreign key
 		String sql = "delete from salon_service where service_id != 1";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.execute();
 			log.info(CLASS_NAME + ".deleteAll() -> Salon services deleted successfully.");
 		} catch (SQLException e) {

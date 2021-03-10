@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,14 +30,19 @@ import com.barbershop.util.ConnectionFactoryPostgres;
 class AppointmentDaoPostgresTest {
 
 	@Mock
-	private Connection connection;
+	private Connection fakeConnection;
 
-	// private static final String DATABASE_ENV = "TestingDb";
+	private static final String DATABASE_ENV = "TestingDb";
 	public static AppointmentDaoPostgres daoPostgres;
 	public static Appointment appointment1;
 	public static Appointment appointment2;
 	public static Appointment appointment3;
 
+	private static Connection realConnection;
+	@BeforeAll
+	static void setUpBeforeClass() throws Exception {
+		realConnection = ConnectionFactoryPostgres.getConnection(DATABASE_ENV);
+	}
 	@BeforeEach
 	private void setUp() {
 		daoPostgres = new AppointmentDaoPostgres();
@@ -47,7 +53,7 @@ class AppointmentDaoPostgresTest {
 
 	@AfterEach
 	private void tearDown() {
-		daoPostgres.deleteAll();
+		//daoPostgres.deleteAll();
 	}
 
 	@Test
@@ -56,7 +62,7 @@ class AppointmentDaoPostgresTest {
 		// creating a real stmt to be able to actually communicate with our db
 		String sql = "insert into appointment (appointment_date, appointment_time, user_id, service_id) values (? , ? , ? , ?)";
 
-		Connection realConnection = ConnectionFactoryPostgres.getConnection();
+		//Connection realConnection = ConnectionFactoryPostgres.getConnection();
 
 		//PreparedStatement realStmt = realConnection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		 PreparedStatement realStmt = realConnection.prepareStatement(sql);
@@ -70,8 +76,9 @@ class AppointmentDaoPostgresTest {
 		// connection would create
 		// a new statement inside of our createCart method, and we could not spy on it
 		//when(connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)).thenReturn(spy);
-		 when(connection.prepareStatement(sql)).thenReturn(spy);
+		 when(fakeConnection.prepareStatement(sql)).thenReturn(spy);
 
+		 daoPostgres.setConnection(fakeConnection);
 		// call the create cart method that we are testing
 		daoPostgres.create(appointment1);
 
@@ -85,7 +92,7 @@ class AppointmentDaoPostgresTest {
 		verify(spy).execute();
 
 		// making a second call to the db, to ensure that the cart was actually created
-		PreparedStatement checkStmt = ConnectionFactoryPostgres.getConnection()
+		PreparedStatement checkStmt = realConnection
 				.prepareStatement("select * from appointment where user_id = 1");
 
 		ResultSet rs = checkStmt.executeQuery();

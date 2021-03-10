@@ -1,11 +1,13 @@
 package com.barbershop.service;
 
+import java.sql.Connection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.barbershop.dao.UserDaoPostgres;
 import com.barbershop.pojo.User;
+import com.barbershop.util.ConnectionFactoryPostgres;
 
 public class UserServiceImpl implements UserService<User> {
 
@@ -13,10 +15,15 @@ public class UserServiceImpl implements UserService<User> {
 	private UserDaoPostgres userDao;
 	private static final String CLASS_NAME = "UserServiceImpl";
 
+	private static final String DATABASE_ENV = "OriginalDb";
+	
+	Connection connection = ConnectionFactoryPostgres.getConnection(DATABASE_ENV);
+	
 	// Constructor
 	public UserServiceImpl(UserDaoPostgres userDao) {
 		super();
 		this.userDao = userDao;
+		this.userDao.setConnection(connection);
 	}
 
 	@Override
@@ -24,10 +31,12 @@ public class UserServiceImpl implements UserService<User> {
 
 		try {
 			List<User> users = userDao.findAll();
+			log.info("----------------------------------------------------------------------");
 			return users;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".findAll() -> Failure to get all users." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return null;
 	}
@@ -38,15 +47,18 @@ public class UserServiceImpl implements UserService<User> {
 		if (isExist(user.getEmailAddress())) {
 			System.out.println(user.getEmailAddress() + ": username is already exist.");
 			log.info(CLASS_NAME + ".create() -> Username is already exist.");
+			log.info("----------------------------------------------------------------------");
 			return false;
 		}
 		try {
 			userDao.create(user);
 			System.out.println("User created successfully.");
+			log.info("----------------------------------------------------------------------");
 			return true;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".create() -> Failure to create a new user account." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return false;
 
@@ -57,15 +69,18 @@ public class UserServiceImpl implements UserService<User> {
 
 		if (user == null || user.getUserId() < 1) {
 			log.error(CLASS_NAME + ".update() -> Failure to update user account with id = " + user.getUserId());
+			log.info("----------------------------------------------------------------------");
 			return false;
 		}
 		try {
 			userDao.update(user);
 			System.out.println("User updated successfully.");
+			log.info("----------------------------------------------------------------------");
 			return true;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".update() -> Failure to update user account." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return false;
 	}
@@ -76,10 +91,12 @@ public class UserServiceImpl implements UserService<User> {
 		try {
 			userDao.deleteById(id);
 			System.out.println("User with id = " + id + " deleted successfully.");
+			log.info("----------------------------------------------------------------------");
 			return true;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".deleteById() -> Failure to delete user account." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return false;
 	}
@@ -90,9 +107,11 @@ public class UserServiceImpl implements UserService<User> {
 		try {
 			userDao.deleteAll();
 			System.out.println("All users deleted successfully.");
+			log.info("----------------------------------------------------------------------");
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".deleteAll() -> Failure to delete all users." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 
 	}
@@ -112,14 +131,17 @@ public class UserServiceImpl implements UserService<User> {
 		if (isExist(username) == false) {
 			System.out.println(username + ": username is not exist.");
 			log.info(CLASS_NAME + ".getUserInfo() -> Username is not exist.");
+			log.info("----------------------------------------------------------------------");
 			return null;
 		}
 		try {
 			User outputUser = userDao.getUserInfo(username, password);
+			log.info("----------------------------------------------------------------------");
 			return outputUser;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".getUserInfo() -> Failure to get user info." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return null;
 	}
@@ -127,6 +149,7 @@ public class UserServiceImpl implements UserService<User> {
 	@Override
 	public boolean updateUerRole(int id, String role) {
 		if (userDao.updateUerRole(id, role)) {
+			log.info("----------------------------------------------------------------------");
 			return true;
 		}
 		return false;

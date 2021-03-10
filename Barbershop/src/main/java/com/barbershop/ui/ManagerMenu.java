@@ -264,7 +264,7 @@ public class ManagerMenu implements Menu {
 	private static void printMenu() {
 		System.out.println("Available actions:\npress");
 		System.out.println("0 - to quit\n" + "1 - See all appointments\n" + "2 - See all users\n"
-				+ "3 - Change user role\n" + "4 - See all salon services\n" +
+				+ "3 - Update user role\n" + "4 - See all salon services\n" +
 				"5 - Add a new service\n" + 
 				"6 - Update a service\n" +
 				"7 - Delete a service\n" + "9 - Print available actions");

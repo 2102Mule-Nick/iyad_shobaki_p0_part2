@@ -21,29 +21,34 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 	Logger log = Logger.getRootLogger();
 	private static final String CLASS_NAME = "AppointmentDaoPostgres";
-	//private static final String DATABASE_ENV = "OriginalDb";
-	
-	
+
+	private Connection connection;
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
 	@Override
 	public List<ManagerApptInfo> getAllUsersAppointmentsDetails() { // Manager
 
 		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all appointments.");
 
 //		String sql = "select * from appointment order by appointment_date, appointment_time desc";
-		String sql = "select a.appointment_id, ua.user_id, ua.first_name, ua.last_name, ua.email_address, ua.phone_number, " + 
-				"ua.user_role, ss.service_name, ss.duration , ss.price, a.appointment_date , a.appointment_time " + 
-				"from salon_service ss inner join appointment a on ss.service_id = a.service_id " + 
-				"inner join user_acc ua on ua.user_id = a.user_id " + 
-				"order by a.appointment_date , a.appointment_time desc";
+		String sql = "select a.appointment_id, ua.user_id, ua.first_name, ua.last_name, ua.email_address, ua.phone_number, "
+				+ "ua.user_role, ss.service_name, ss.duration , ss.price, a.appointment_date , a.appointment_time "
+				+ "from salon_service ss inner join appointment a on ss.service_id = a.service_id "
+				+ "inner join user_acc ua on ua.user_id = a.user_id "
+				+ "order by a.appointment_date , a.appointment_time desc";
 
 		List<ManagerApptInfo> appointments = null;
 
 		ManagerApptInfo appointment = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		// try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try {
 
 			appointments = new ArrayList<>();
-			Statement stmt = conn.createStatement();
+			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -54,10 +59,9 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 				LocalDate date = sqlDate.toLocalDate();
 				LocalTime time = sqlTime.toLocalTime();
 				appointment = new ManagerApptInfo(rs.getInt("appointment_id"), rs.getInt("user_id"),
-						rs.getString("first_name"),rs.getString("last_name"),
-						rs.getString("email_address"),rs.getString("phone_number")
-						,rs.getString("user_role"),rs.getString("service_name")
-						,rs.getString("duration"),rs.getFloat("price"),date, time);
+						rs.getString("first_name"), rs.getString("last_name"), rs.getString("email_address"),
+						rs.getString("phone_number"), rs.getString("user_role"), rs.getString("service_name"),
+						rs.getString("duration"), rs.getFloat("price"), date, time);
 
 				appointments.add(appointment);
 			}
@@ -68,9 +72,9 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		log.info(CLASS_NAME + ".findAll() -> A list of appointments returned successfully.");
 		return appointments;
 	}
-	
+
 	@Override
-	public List<Appointment> findAll() { // Delete later 
+	public List<Appointment> findAll() { // Delete later
 
 		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all appointments.");
 
@@ -80,10 +84,11 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		Appointment appointment = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try {
 
 			appointments = new ArrayList<>();
-			Statement stmt = conn.createStatement();
+			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -93,7 +98,7 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 				LocalDate date = sqlDate.toLocalDate();
 				LocalTime time = sqlTime.toLocalTime();
-				appointment = new Appointment(rs.getInt("appointment_id"),date, time, rs.getInt("user_id"),
+				appointment = new Appointment(rs.getInt("appointment_id"), date, time, rs.getInt("user_id"),
 						rs.getInt("service_id"));
 
 				appointments.add(appointment);
@@ -117,16 +122,17 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		String sql = "insert into appointment (appointment_date, appointment_time, user_id, service_id)"
 				+ " values (? , ? , ? , ?)";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			
-			stmt = conn.prepareStatement(sql);
+		// try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try {
+
+//			stmt = conn.prepareStatement(sql);
+			stmt = connection.prepareStatement(sql);
 			stmt.setDate(1, java.sql.Date.valueOf(appointment.getAppointmentDate()));
 			stmt.setTime(2, java.sql.Time.valueOf(appointment.getAppointmentTime()));
 			stmt.setInt(3, appointment.getUserId());
 			stmt.setInt(4, appointment.getServiceId());
 			stmt.execute();
 
-			
 			log.info(CLASS_NAME + ".create() -> Appointment created successfuly.");
 			return true;
 		} catch (SQLException e) {
@@ -148,8 +154,9 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		String sql = "update appointment set appointment_date = ?, appointment_time = ?, "
 				+ "service_id = ? where appointment_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setDate(1, java.sql.Date.valueOf(appointment.getAppointmentDate()));
 			stmt.setTime(2, java.sql.Time.valueOf(appointment.getAppointmentTime()));
 			stmt.setInt(3, appointment.getServiceId());
@@ -174,8 +181,9 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		String sql = "delete from appointment where appointment_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
 			stmt.execute();
 			log.info(CLASS_NAME + ".deleteById() -> Appointment deleted successfully.");
@@ -198,23 +206,24 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 	@Override
 	public List<AppointmentInfo> getAllAppointmentsByUserId(int id) {
 
-		log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> An Attempt to get all appointments for user id = " + id);
+		log.info(
+				CLASS_NAME + ".getAllAppointmentsByUserId() -> An Attempt to get all appointments for user id = " + id);
 
 		PreparedStatement stmt = null;
 
-		String sql = "select a.appointment_id, ss.service_name, ss.duration , ss.price, a.appointment_date , a.appointment_time " + 
-				"from salon_service ss inner join appointment a on ss.service_id = a.service_id " + 
-				"where user_id = ?" + 
-				"order by a.appointment_date , a.appointment_time desc";
+		String sql = "select a.appointment_id, ss.service_name, ss.duration , ss.price, a.appointment_date , a.appointment_time "
+				+ "from salon_service ss inner join appointment a on ss.service_id = a.service_id "
+				+ "where user_id = ?" + "order by a.appointment_date , a.appointment_time desc";
 
 		List<AppointmentInfo> appointments = null;
 
 		AppointmentInfo appointment = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try  {
 
 			appointments = new ArrayList<>();
-			stmt = conn.prepareStatement(sql);
+			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 
@@ -225,8 +234,8 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 				LocalDate date = sqlDate.toLocalDate();
 				LocalTime time = sqlTime.toLocalTime();
-				appointment = new AppointmentInfo(rs.getInt("appointment_id"),rs.getString("service_name"),
-						 rs.getString("duration"), rs.getFloat("price"),date, time);
+				appointment = new AppointmentInfo(rs.getInt("appointment_id"), rs.getString("service_name"),
+						rs.getString("duration"), rs.getFloat("price"), date, time);
 
 				appointments.add(appointment);
 			}
@@ -238,8 +247,7 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> A list of appointments for user_id " + id
 				+ " returned successfully.");
 		return appointments;
-		
-		
+
 		// old
 //		log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> An Attempt to get all appointments for user id = " + id);
 //
@@ -293,10 +301,11 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		LocalTime apptTime = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
 
 			appointmentsTime = new ArrayList<>();
-			stmt = conn.prepareStatement(sql);
+			stmt = connection.prepareStatement(sql);
 			stmt.setDate(1, java.sql.Date.valueOf(date));
 			ResultSet rs = stmt.executeQuery();
 
@@ -326,17 +335,16 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		String sql = "delete from appointment";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try  {
+			stmt = connection.prepareStatement(sql);
 			stmt.execute();
 			log.info(CLASS_NAME + ".deleteAll() -> Appointments deleted successfully.");
 		} catch (SQLException e) {
-			log.error(
-					CLASS_NAME + ".deleteById() -> Failure to delete all appointments (SQLEXCEPTION)." + e.getMessage());
+			log.error(CLASS_NAME + ".deleteById() -> Failure to delete all appointments (SQLEXCEPTION)."
+					+ e.getMessage());
 		}
 
 	}
-
-
 
 }

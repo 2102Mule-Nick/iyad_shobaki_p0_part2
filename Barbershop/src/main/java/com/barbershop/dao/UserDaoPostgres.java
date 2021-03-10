@@ -17,8 +17,14 @@ public class UserDaoPostgres implements UserDao<User> {
 
 	Logger log = Logger.getRootLogger();
 	private static final String CLASS_NAME = "UserDaoPostgres";
-	//private static final String DATABASE_ENV = "OriginalDb";
 
+	
+	private Connection connection;
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+	
 	public List<User> findAll() { // Manager
 
 		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all users.");
@@ -29,10 +35,11 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		User user = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
 
 			users = new ArrayList<>();
-			Statement stmt = conn.createStatement();
+			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -60,8 +67,9 @@ public class UserDaoPostgres implements UserDao<User> {
 		String sql = "insert into user_acc (first_name, last_name, phone_number, email_address, user_role, user_password)"
 				+ " values (? , ? , ? , ?, ? , ?)";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
 			stmt.setString(3, user.getPhoneNumber());
@@ -91,8 +99,9 @@ public class UserDaoPostgres implements UserDao<User> {
 		String sql = "update user_acc set first_name = ?, last_name = ?, phone_number = ?, "
 				+ "email_address = ?, user_role = ?, user_password = ?  where user_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
 			stmt.setString(3, user.getPhoneNumber());
@@ -119,8 +128,9 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "delete from user_acc where user_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
 			stmt.execute();
 			log.info(CLASS_NAME + ".deleteById() -> User deleted successfully.");
@@ -142,8 +152,9 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "select * from user_acc where email_address = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
@@ -176,8 +187,9 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "select * from user_acc where email_address = ? and user_password = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, username);
 			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();
@@ -212,8 +224,9 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "update user_acc set user_role = ? where user_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, role);
 			stmt.setInt(2, id);
 			stmt.execute();
@@ -237,8 +250,9 @@ public class UserDaoPostgres implements UserDao<User> {
 		// Delete all except id # 1 to test appointment table Foreign key
 		String sql = "delete from user_acc where user_id != 1";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-			stmt = conn.prepareStatement(sql);
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+			try {
+			stmt = connection.prepareStatement(sql);
 			stmt.execute();
 			log.info(CLASS_NAME + ".deleteAll() -> Users deleted successfully.");
 		} catch (SQLException e) {

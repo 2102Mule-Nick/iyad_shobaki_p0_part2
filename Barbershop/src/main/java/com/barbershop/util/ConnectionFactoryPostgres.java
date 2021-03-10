@@ -18,7 +18,7 @@ public final class ConnectionFactoryPostgres {
 
 	public static String PASSWORD;
 	
-	public static String DB_NAME = "barbershop_test"; // "barbershop_db";
+	public static String DB_NAME = "";//"barbershop_test"; // "barbershop_db";
 
 	private static ConnectionFactoryPostgres connectionFactory = null;
 
@@ -55,12 +55,12 @@ public final class ConnectionFactoryPostgres {
 		return null;
 	}
 
-	public static synchronized Connection getConnection() {
-//		if(environment.equals("TestingDb")) {
-//			DB_NAME = "barbershop_test";
-//		}else {
-//			DB_NAME = "barbershop_db";
-//		}
+	public static synchronized Connection getConnection(String environment) {
+		if(environment.equals("TestingDb")) {
+			DB_NAME = "barbershop_test";
+		}else {
+			DB_NAME = "barbershop_db";
+		}
 		if (connectionFactory == null) {
 			connectionFactory = new ConnectionFactoryPostgres();
 		}

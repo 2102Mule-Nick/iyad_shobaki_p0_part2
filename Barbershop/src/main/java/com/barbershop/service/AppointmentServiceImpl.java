@@ -1,5 +1,6 @@
 package com.barbershop.service;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -12,30 +13,35 @@ import com.barbershop.pojo.Appointment;
 import com.barbershop.pojo.AppointmentInfo;
 import com.barbershop.pojo.ManagerApptInfo;
 import com.barbershop.pojo.User;
+import com.barbershop.util.ConnectionFactoryPostgres;
 
 public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 
 	Logger log = Logger.getRootLogger();
-	private AppointmentDaoPostgres AppointmentDao;
+	private AppointmentDaoPostgres appointmentDaoPostgres;
 	private static final String CLASS_NAME = "UserServiceImpl";
+	private static final String DATABASE_ENV = "OriginalDb";
 	
+	Connection connection = ConnectionFactoryPostgres.getConnection(DATABASE_ENV);
 	
 	// Constructor 
 	public AppointmentServiceImpl(AppointmentDaoPostgres appointmentDao) {
 		super();
-		AppointmentDao = appointmentDao;
+		this.appointmentDaoPostgres = appointmentDao;
+		this.appointmentDaoPostgres.setConnection(connection);
 	}
 	
 
 	@Override
 	public List<ManagerApptInfo> getAllUsersAppointmentsDetails() { // Manager
 		try {			
-			List<ManagerApptInfo> appointments = AppointmentDao.getAllUsersAppointmentsDetails();
+			List<ManagerApptInfo> appointments = appointmentDaoPostgres.getAllUsersAppointmentsDetails();
 			log.info("----------------------------------------------------------------------");
 			return appointments;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".findAll() -> Failure to get all appointments." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return null;
 	}
@@ -44,12 +50,13 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	public List<Appointment> findAll() { // Manager role / delete later
 		
 		try {			
-			List<Appointment> appointments = AppointmentDao.findAll();
+			List<Appointment> appointments = appointmentDaoPostgres.findAll();
 			log.info("----------------------------------------------------------------------");
 			return appointments;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".findAll() -> Failure to get all appointments." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return null;
 	}
@@ -59,12 +66,13 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 		
 		
 		try {			
-			AppointmentDao.create(appointment);
+			appointmentDaoPostgres.create(appointment);
 			System.out.println("Appointment booked successfully.");
+			log.info("----------------------------------------------------------------------");
 			return true;
 		} catch (Exception e) {
-			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".create() -> Failure to book an appointment." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return false;
 	}
@@ -77,12 +85,14 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 			return false;
 		}
 		try {
-			AppointmentDao.update(appointment);
+			appointmentDaoPostgres.update(appointment);
 			System.out.println("Appointment updated successfully.");
+			log.info("----------------------------------------------------------------------");
 			return true;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".update() -> Failure to update an appointment." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return false;
 	}
@@ -91,11 +101,13 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	public boolean deleteById(int id) { // All users
 		
 		try {
-			AppointmentDao.deleteById(id);
+			appointmentDaoPostgres.deleteById(id);
+			log.info("----------------------------------------------------------------------");
 			return true;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".deleteById() -> Failure to delete an appointment." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return false;
 	}
@@ -104,11 +116,13 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	public void deleteAll() { // Testing purpose
 
 		try {
-			AppointmentDao.deleteAll();
+			appointmentDaoPostgres.deleteAll();
 			System.out.println("All appointments deleted successfully.");
+			log.info("----------------------------------------------------------------------");
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".deleteAll() -> Failure to delete all appointments." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		
 	}
@@ -118,11 +132,13 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 		
 		List<LocalTime> apptsTimes = new ArrayList<>();
 		try {
-			apptsTimes = AppointmentDao.getAllAppointmentsTimeByDate(date);
+			apptsTimes = appointmentDaoPostgres.getAllAppointmentsTimeByDate(date);
+			log.info("----------------------------------------------------------------------");
 			return apptsTimes;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".getAllAppointmentsTimeByDate() -> Failure to get all appointments for a specific date." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return null;
 	}
@@ -132,11 +148,13 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 		
 		List<AppointmentInfo> apptsByUser = new ArrayList<>();
 		try {
-			apptsByUser = AppointmentDao.getAllAppointmentsByUserId(id);
+			apptsByUser = appointmentDaoPostgres.getAllAppointmentsByUserId(id);
+			log.info("----------------------------------------------------------------------");
 			return apptsByUser;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
 			log.error(CLASS_NAME + ".getAllAppointmentsByUserId() -> Failure to get all appointments for a specific user." + e.getMessage());
+			log.info("----------------------------------------------------------------------");
 		}
 		return null;
 	}

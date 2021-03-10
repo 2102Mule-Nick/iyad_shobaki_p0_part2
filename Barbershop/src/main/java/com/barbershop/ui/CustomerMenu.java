@@ -74,7 +74,7 @@ public class CustomerMenu implements Menu {
 					System.out.println("An appointment has been scheduled for " + this.user.getFirstName() + " on : "
 							+ appointment.getAppointmentDate() + " at: " + appointment.getAppointmentTime());
 				} else {
-					System.out.println("Something went wrong! Please try again.");
+					System.out.println("Something went wrong. Please try again later!");
 				}
 				System.out.println("***********************************************");
 				break;
