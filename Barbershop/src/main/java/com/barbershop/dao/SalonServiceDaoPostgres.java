@@ -17,19 +17,20 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 	Logger log = Logger.getRootLogger();
 	private static final String CLASS_NAME = "SalonServiceDaoPostgres";
+	private static final String DATABASE_ENV = "OriginalDb";
 
 	@Override
 	public List<SalonService> findAll() {
 
 		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all salon services.");
 
-		String sql = "select * from salon_service";
+		String sql = "select * from salon_service order by service_id asc";
 
 		List<SalonService> salonServices = null;
 
 		SalonService service = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 
 			salonServices = new ArrayList<>();
 			Statement stmt = conn.createStatement();
@@ -61,7 +62,7 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 		String sql = "insert into salon_service (service_name, description, duration, price)"
 				+ " values (? , ? , ? , ?)";
 		
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, service.getServiceName());
 			stmt.setString(2, service.getDescription());
@@ -92,7 +93,7 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 		String sql = "update salon_service set service_name = ?, description = ?, duration = ?, "
 				+ "price = ? where service_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, service.getServiceName());
 			stmt.setString(2, service.getDescription());
@@ -119,7 +120,7 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		String sql = "delete from salon_service where service_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			stmt.execute();
@@ -143,7 +144,7 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		String sql = "select * from salon_service where service_name = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, name);
 			ResultSet rs = stmt.executeQuery();
@@ -179,7 +180,7 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		SalonService service = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -207,7 +208,7 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 		// Delete all except id # 1 to test appointment table Foreign key
 		String sql = "delete from salon_service where service_id != 1";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.execute();
 			log.info(CLASS_NAME + ".deleteAll() -> Salon services deleted successfully.");

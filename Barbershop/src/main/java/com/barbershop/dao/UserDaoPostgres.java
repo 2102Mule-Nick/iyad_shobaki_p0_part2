@@ -17,6 +17,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 	Logger log = Logger.getRootLogger();
 	private static final String CLASS_NAME = "UserDaoPostgres";
+	private static final String DATABASE_ENV = "OriginalDb";
 
 	public List<User> findAll() {
 
@@ -28,7 +29,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		User user = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 
 			users = new ArrayList<>();
 			Statement stmt = conn.createStatement();
@@ -59,7 +60,7 @@ public class UserDaoPostgres implements UserDao<User> {
 		String sql = "insert into user_acc (first_name, last_name, phone_number, email_address, user_role, user_password)"
 				+ " values (? , ? , ? , ?, ? , ?)";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
@@ -68,14 +69,15 @@ public class UserDaoPostgres implements UserDao<User> {
 			stmt.setString(5, user.getRole());
 			stmt.setString(6, user.getPassword());
 			stmt.execute();
-			
+
 			log.info(CLASS_NAME + ".create() -> User created successfuly.");
 			return true;
-			
+
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".create() -> Failure to create a new user account (SQLEXCEPTION)." + e.getMessage());
+			log.error(
+					CLASS_NAME + ".create() -> Failure to create a new user account (SQLEXCEPTION)." + e.getMessage());
 		}
-		
+
 		log.error(CLASS_NAME + ".create() -> Unable to create a new user account.");
 		return false;
 	}
@@ -89,7 +91,7 @@ public class UserDaoPostgres implements UserDao<User> {
 		String sql = "update user_acc set first_name = ?, last_name = ?, phone_number = ?, "
 				+ "email_address = ?, user_role = ?, user_password = ?  where user_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
@@ -117,7 +119,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "delete from user_acc where user_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			stmt.execute();
@@ -126,7 +128,7 @@ public class UserDaoPostgres implements UserDao<User> {
 		} catch (SQLException e) {
 			log.error(CLASS_NAME + ".deleteById() -> Failure to delete user account (SQLEXCEPTION)." + e.getMessage());
 		}
-		
+
 		log.error(CLASS_NAME + ".deleteById() -> Unable to delete user account.");
 		return false;
 	}
@@ -140,7 +142,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "select * from user_acc where email_address = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			ResultSet rs = stmt.executeQuery();
@@ -174,7 +176,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "select * from user_acc where email_address = ? and user_password = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			stmt.setString(2, password);
@@ -201,26 +203,46 @@ public class UserDaoPostgres implements UserDao<User> {
 		log.info(CLASS_NAME + ".getUserInfo() -> Invalid username or password.");
 		return null;
 	}
-	
-	// For testing purpose
-		@Override
-		public void deleteAll() {
-			log.info(CLASS_NAME + ".deleteAll() -> An attempt to delete all users.");
 
-			PreparedStatement stmt = null;
+	public boolean updateUerRole(int id) {
+		log.info(CLASS_NAME + ".updateUerRole() -> An attempt to update user role with user_id= " + id);
 
-			// Delete all except id # 1 to test appointment table Foreign key
-			String sql = "delete from user_acc where user_id != 1";
+		PreparedStatement stmt = null;
 
-			try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-				stmt = conn.prepareStatement(sql);
-				stmt.execute();
-				log.info(CLASS_NAME + ".deleteAll() -> Users deleted successfully.");
-			} catch (SQLException e) {
-				log.error(CLASS_NAME + ".deleteById() -> Failure to delete all users (SQLEXCEPTION)."
-						+ e.getMessage());
-			}
+		String sql = "update user_acc set user_role = 'Manager' where user_id = ?";
 
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			stmt.execute();
+			log.info(CLASS_NAME + ".updateUerRole() -> User role updated successfully.");
+			return true;
+		} catch (SQLException e) {
+			log.error(CLASS_NAME + ".updateUerRole() -> Failure to update user role (SQLEXCEPTION)." + e.getMessage());
 		}
+
+		log.error(CLASS_NAME + ".updateUerRole() -> Unable to update user role.");
+		return false;
+	}
+
+	// For testing purpose
+	@Override
+	public void deleteAll() {
+		log.info(CLASS_NAME + ".deleteAll() -> An attempt to delete all users.");
+
+		PreparedStatement stmt = null;
+
+		// Delete all except id # 1 to test appointment table Foreign key
+		String sql = "delete from user_acc where user_id != 1";
+
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+			stmt = conn.prepareStatement(sql);
+			stmt.execute();
+			log.info(CLASS_NAME + ".deleteAll() -> Users deleted successfully.");
+		} catch (SQLException e) {
+			log.error(CLASS_NAME + ".deleteById() -> Failure to delete all users (SQLEXCEPTION)." + e.getMessage());
+		}
+
+	}
 
 }

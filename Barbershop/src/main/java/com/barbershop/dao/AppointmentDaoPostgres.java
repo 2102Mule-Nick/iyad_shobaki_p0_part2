@@ -19,19 +19,20 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 	Logger log = Logger.getRootLogger();
 	private static final String CLASS_NAME = "AppointmentDaoPostgres";
+	private static final String DATABASE_ENV = "OriginalDb";
 
 	@Override
 	public List<Appointment> findAll() {
 
 		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all appointments.");
 
-		String sql = "select * from appointment";
+		String sql = "select * from appointment order by appointment_date, appointment_time desc";
 
 		List<Appointment> appointments = null;
 
 		Appointment appointment = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 
 			appointments = new ArrayList<>();
 			Statement stmt = conn.createStatement();
@@ -68,7 +69,7 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		String sql = "insert into appointment (appointment_date, appointment_time, user_id, service_id)"
 				+ " values (? , ? , ? , ?)";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			
 			stmt = conn.prepareStatement(sql);
 			stmt.setDate(1, java.sql.Date.valueOf(appointment.getAppointmentDate()));
@@ -99,7 +100,7 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		String sql = "update appointment set appointment_date = ?, appointment_time = ?, "
 				+ "service_id = ? where appointment_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setDate(1, java.sql.Date.valueOf(appointment.getAppointmentDate()));
 			stmt.setTime(2, java.sql.Time.valueOf(appointment.getAppointmentTime()));
@@ -125,7 +126,7 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		String sql = "delete from appointment where appointment_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			stmt.execute();
@@ -153,13 +154,13 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		PreparedStatement stmt = null;
 
-		String sql = "select * from appointment where user_id = ?";
+		String sql = "select * from appointment where user_id = ? order by appointment_date, appointment_time desc";
 
 		List<Appointment> appointments = null;
 
 		Appointment appointment = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 
 			appointments = new ArrayList<>();
 			stmt = conn.prepareStatement(sql);
@@ -201,7 +202,7 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		LocalTime apptTime = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 
 			appointmentsTime = new ArrayList<>();
 			stmt = conn.prepareStatement(sql);
@@ -234,7 +235,7 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		String sql = "delete from appointment";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
 			stmt.execute();
 			log.info(CLASS_NAME + ".deleteAll() -> Appointments deleted successfully.");

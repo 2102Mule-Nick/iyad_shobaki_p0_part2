@@ -23,7 +23,6 @@ public class SalonServiceServiceImpl implements SalonServiceService<SalonService
 	public List<SalonService> findAll() {
 		try {			
 			List<SalonService> services = salonServiceDao.findAll();
-			System.out.println("All salon services info returned successfully.");
 			return services;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");

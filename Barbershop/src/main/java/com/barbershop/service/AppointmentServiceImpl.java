@@ -25,7 +25,7 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	}
 
 	@Override
-	public List<Appointment> findAll() {
+	public List<Appointment> findAll() { // Manager role
 		
 		try {			
 			List<Appointment> appointments = AppointmentDao.findAll();
@@ -40,7 +40,7 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	}
 
 	@Override
-	public boolean create(Appointment appointment) {
+	public boolean create(Appointment appointment) { // All users
 		
 		
 		try {			
@@ -55,7 +55,7 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	}
 
 	@Override
-	public boolean update(Appointment appointment) {
+	public boolean update(Appointment appointment) { //All users
 		
 		if(appointment == null || appointment.getAppointmentId() < 1) {
 			log.error(CLASS_NAME + ".update() -> Failure to update an appointment with id = " + appointment.getAppointmentId());
@@ -73,11 +73,10 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	}
 
 	@Override
-	public boolean deleteById(int id) {
+	public boolean deleteById(int id) { // All users
 		
 		try {
 			AppointmentDao.deleteById(id);
-			System.out.println("Appointment with id = " + id + " deleted successfully.");
 			return true;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
@@ -87,7 +86,7 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	}
 
 	@Override
-	public void deleteAll() {
+	public void deleteAll() { // Testing purpose
 
 		try {
 			AppointmentDao.deleteAll();
@@ -100,12 +99,11 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	}
 
 	@Override
-	public List<LocalTime> getAllAppointmentsTimeByDate(LocalDate date) {
+	public List<LocalTime> getAllAppointmentsTimeByDate(LocalDate date) { // Users
 		
 		List<LocalTime> apptsTimes = new ArrayList<>();
 		try {
 			apptsTimes = AppointmentDao.getAllAppointmentsTimeByDate(date);
-			System.out.println("All appointments on " + date + " returned successfully.");
 			return apptsTimes;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
@@ -115,12 +113,11 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	}
 
 	@Override
-	public List<Appointment> getAllAppointmentsByUserId(int id) {
+	public List<Appointment> getAllAppointmentsByUserId(int id) { // Users
 		
 		List<Appointment> apptsByUser = new ArrayList<>();
 		try {
 			apptsByUser = AppointmentDao.getAllAppointmentsByUserId(id);
-			System.out.println("All appointments for user with id = " + id + " returned successfully.");
 			return apptsByUser;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");

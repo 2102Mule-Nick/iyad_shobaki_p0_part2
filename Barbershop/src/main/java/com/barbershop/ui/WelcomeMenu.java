@@ -8,6 +8,12 @@ public class WelcomeMenu implements Menu {
 	private Menu registrationMenu;
 	private Menu nextMenu;
 	
+	
+	public WelcomeMenu() {
+		super();
+	}
+
+
 	// Constructor
 	public WelcomeMenu(Menu loginMenu, Menu registrationMenu) {
 		super();
@@ -33,7 +39,6 @@ public class WelcomeMenu implements Menu {
 	
 		System.out.println("Would you like to login or register?");
 		String answer = scanner.nextLine();
-
 		if ("login".equals(answer)) {
 			nextMenu = loginMenu;
 		} else if ("register".equals(answer)) {

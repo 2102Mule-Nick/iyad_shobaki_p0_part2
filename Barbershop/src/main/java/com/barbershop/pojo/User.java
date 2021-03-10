@@ -85,6 +85,11 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	public int getUserId() {
 		return userId;

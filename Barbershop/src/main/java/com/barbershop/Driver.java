@@ -1,9 +1,17 @@
 package com.barbershop;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import com.barbershop.dao.AppointmentDaoPostgres;
+import com.barbershop.dao.SalonServiceDaoPostgres;
 import com.barbershop.dao.UserDaoPostgres;
 import com.barbershop.pojo.User;
+import com.barbershop.service.AppointmentServiceImpl;
+import com.barbershop.service.SalonServiceServiceImpl;
 import com.barbershop.service.UserServiceImpl;
 import com.barbershop.ui.CustomerMenu;
 import com.barbershop.ui.LoginMenu;
@@ -22,51 +30,37 @@ public class Driver {
 		System.out.println("\t------------    Welcome To The Barbershop Application     ------------");
 		System.out.println("\t------------    -------------------------------------     ------------");
 		System.out.println("\t------------    -------------------------------------     ------------");
-
-		UserDaoPostgres userDao = new UserDaoPostgres();
-
-		UserServiceImpl userServiceImpl = new UserServiceImpl(userDao);
+	
 		
-		CustomerMenu customerMenu = new CustomerMenu();
-		ManagerMenu managerMenu = new ManagerMenu();		
+		UserDaoPostgres userDao = new UserDaoPostgres();
+		UserServiceImpl userServiceImpl = new UserServiceImpl(userDao);
+		WelcomeMenu passingMenu = new WelcomeMenu();
+		AppointmentDaoPostgres appointmentDao = new AppointmentDaoPostgres();
+		AppointmentServiceImpl appointmentServiceImpl = new AppointmentServiceImpl(appointmentDao);
+		SalonServiceDaoPostgres salonServiceDao = new SalonServiceDaoPostgres();
+		SalonServiceServiceImpl salonServiceServiceImpl = new SalonServiceServiceImpl(salonServiceDao);
+		
+		
+		CustomerMenu customerMenu = new CustomerMenu(user,userServiceImpl, appointmentServiceImpl,
+				salonServiceServiceImpl, passingMenu);
+		ManagerMenu managerMenu = new ManagerMenu(user, userServiceImpl, passingMenu);		
 		LoginMenu loginMenu = new LoginMenu(user, userServiceImpl, customerMenu, managerMenu);
 		RegistrationMenu registrationMenu = new RegistrationMenu(user, userServiceImpl, loginMenu);
 		WelcomeMenu welcomeMenu = new WelcomeMenu(loginMenu, registrationMenu);
 
+		//Menu[] menus = {loginMenu, registrationMenu};
+		
 		Menu nextMenu = welcomeMenu;
 
 		do {
 			nextMenu.displayOptions(scanner);
 
-			nextMenu = nextMenu.advance();
+			nextMenu = nextMenu.advance();//user, userServiceImpl,menus);
 		} while (nextMenu != null);
 
 	}
-
 }
 
-/*
- * System.out.
- * println("Please enter a date in format mm/dd/yyyy and should be between today's date and 30 days from now: "
- * );
- * 
- * LocalDate date = null; boolean flag = true; do {
- * 
- * while (!scanner.hasNext("([0-9]{2})/([0-9]{2})/([0-9]{4})")) {
- * System.out.println("Invalid input. Please try again:"); scanner.nextLine(); }
- * 
- * String dateString = scanner.nextLine();
- * 
- * DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
- * date = LocalDate.parse(dateString, dateFormatter); if
- * (!date.isBefore(LocalDate.now()) &&
- * !date.isAfter(LocalDate.now().plusMonths(1))) { flag = false; }else {
- * System.out.
- * println("Invalid input. Please try again (date should be between today's date and 30 days from now):"
- * ); } } while (flag);
- * 
- * System.out.println(date);
- */
 
 /*
  * 

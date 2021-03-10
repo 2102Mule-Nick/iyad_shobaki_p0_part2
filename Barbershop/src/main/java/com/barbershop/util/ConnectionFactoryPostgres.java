@@ -17,11 +17,15 @@ public final class ConnectionFactoryPostgres {
 	public static String USERNAME;
 
 	public static String PASSWORD;
+	
+	public static String DB_NAME;
 
 	private static ConnectionFactoryPostgres connectionFactory = null;
 
 	private ConnectionFactoryPostgres() {
-		URL = "jdbc:postgresql://" + System.getenv("BARBERSHOP_DB_URL") + ":5432/" + "barbershop_db" + "?";
+		
+//		URL = "jdbc:postgresql://" + System.getenv("BARBERSHOP_DB_URL") + ":5432/" + "barbershop_db" + "?";
+		URL = "jdbc:postgresql://" + System.getenv("BARBERSHOP_DB_URL") + ":5432/" + DB_NAME + "?";
 
 		USERNAME = System.getenv("BARBERSHOP_DB_USERNAME");
 
@@ -49,8 +53,12 @@ public final class ConnectionFactoryPostgres {
 		return null;
 	}
 
-	public static synchronized Connection getConnection() {
-
+	public static synchronized Connection getConnection(String environment) {
+		if(environment.equals("TestingDb")) {
+			DB_NAME = "barbershop_test";
+		}else {
+			DB_NAME = "barbershop_db";
+		}
 		if (connectionFactory == null) {
 			connectionFactory = new ConnectionFactoryPostgres();
 		}

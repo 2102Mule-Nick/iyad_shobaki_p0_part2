@@ -41,7 +41,15 @@ public class LoginMenu implements Menu {
 		String password = scanner.nextLine();
 		
 		if (userServiceImpl.getUserInfo(username, password) != null) {
-			this.user = userServiceImpl.getUserInfo(username, password);
+			User authUser = userServiceImpl.getUserInfo(username, password);
+			this.user.setUserId(authUser.getUserId());
+			this.user.setFirstName(authUser.getFirstName());
+			this.user.setLastName(authUser.getLastName());
+			this.user.setEmailAddress(authUser.getEmailAddress());
+			this.user.setPhoneNumber(authUser.getPhoneNumber());
+			this.user.setRole(authUser.getRole());
+			this.user.setPassword(authUser.getPassword());
+			
 			if (answer.equals("admin") && this.user.getRole().equals("Manager")) {
 				nextMenu = managerMenu;
 			} else if(answer.equals("admin") && this.user.getRole().equals("Customer")) {
@@ -59,6 +67,7 @@ public class LoginMenu implements Menu {
 	}
 
 	private void clearUserInfo(User user) {
+		user.setUserId(0);
 		user.setFirstName("");
 		user.setLastName("");
 		user.setEmailAddress("");

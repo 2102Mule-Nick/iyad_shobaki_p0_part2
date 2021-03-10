@@ -37,12 +37,15 @@ public class Appointment {
 		this.serviceId = serviceId;
 	}
 
-	
 	// Setters and getters
+
+	public void setAppointmentId(int appointmentId) {
+		this.appointmentId = appointmentId;
+	}
+	
 	public int getAppointmentId() {
 		return appointmentId;
 	}
-
 
 	public LocalDate getAppointmentDate() {
 		return appointmentDate;
@@ -79,7 +82,10 @@ public class Appointment {
 	// Override methods
 	@Override
 	public String toString() {
-		return "Appointment [Appointment Date= " + getAppointmentDate()
+		return "Appointment [ApptID= " + getAppointmentId()+ 
+				", ServiceId= " + getServiceId() +
+				", UserId= " + getUserId() +
+				", Appointment Date= " + getAppointmentDate()
 				+ ", Appointment Time= " + getAppointmentTime() + "]";
 	}
 	
