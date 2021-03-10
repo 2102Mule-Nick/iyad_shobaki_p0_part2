@@ -18,7 +18,7 @@ public final class ConnectionFactoryPostgres {
 
 	public static String PASSWORD;
 	
-	public static String DB_NAME;
+	public static String DB_NAME = "barbershop_test"; // "barbershop_db";
 
 	private static ConnectionFactoryPostgres connectionFactory = null;
 
@@ -46,19 +46,21 @@ public final class ConnectionFactoryPostgres {
 		try {
 			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			log.info(CLASS_NAME + ".createConnection() -> Connecting to DB succeedded!");
+			log.info("----------------------------------------------------------------------");
 			return conn;
 		} catch (SQLException e) {
 			log.error(CLASS_NAME + ".createConnection() -> Failed to connect to DB", e);
+			log.info("----------------------------------------------------------------------");
 		}
 		return null;
 	}
 
-	public static synchronized Connection getConnection(String environment) {
-		if(environment.equals("TestingDb")) {
-			DB_NAME = "barbershop_test";
-		}else {
-			DB_NAME = "barbershop_db";
-		}
+	public static synchronized Connection getConnection() {
+//		if(environment.equals("TestingDb")) {
+//			DB_NAME = "barbershop_test";
+//		}else {
+//			DB_NAME = "barbershop_db";
+//		}
 		if (connectionFactory == null) {
 			connectionFactory = new ConnectionFactoryPostgres();
 		}

@@ -17,7 +17,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 	Logger log = Logger.getRootLogger();
 	private static final String CLASS_NAME = "UserDaoPostgres";
-	private static final String DATABASE_ENV = "OriginalDb";
+	//private static final String DATABASE_ENV = "OriginalDb";
 
 	public List<User> findAll() { // Manager
 
@@ -29,7 +29,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		User user = null;
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 
 			users = new ArrayList<>();
 			Statement stmt = conn.createStatement();
@@ -60,7 +60,7 @@ public class UserDaoPostgres implements UserDao<User> {
 		String sql = "insert into user_acc (first_name, last_name, phone_number, email_address, user_role, user_password)"
 				+ " values (? , ? , ? , ?, ? , ?)";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
@@ -91,7 +91,7 @@ public class UserDaoPostgres implements UserDao<User> {
 		String sql = "update user_acc set first_name = ?, last_name = ?, phone_number = ?, "
 				+ "email_address = ?, user_role = ?, user_password = ?  where user_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
@@ -119,7 +119,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "delete from user_acc where user_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			stmt.execute();
@@ -142,7 +142,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "select * from user_acc where email_address = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			ResultSet rs = stmt.executeQuery();
@@ -176,7 +176,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "select * from user_acc where email_address = ? and user_password = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			stmt.setString(2, password);
@@ -212,7 +212,7 @@ public class UserDaoPostgres implements UserDao<User> {
 
 		String sql = "update user_acc set user_role = ? where user_id = ?";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, role);
 			stmt.setInt(2, id);
@@ -237,7 +237,7 @@ public class UserDaoPostgres implements UserDao<User> {
 		// Delete all except id # 1 to test appointment table Foreign key
 		String sql = "delete from user_acc where user_id != 1";
 
-		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			stmt = conn.prepareStatement(sql);
 			stmt.execute();
 			log.info(CLASS_NAME + ".deleteAll() -> Users deleted successfully.");
