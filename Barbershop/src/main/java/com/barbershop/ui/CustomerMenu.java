@@ -111,7 +111,7 @@ public class CustomerMenu implements Menu {
 							if (apptNumber >= 1 && apptNumber <= appointments.size()) {
 								flag = false;
 							} else {
-								System.out.println("Invalid input. Please pick a service by its number between 1 - "
+								System.out.println("Invalid input. Please pick an appointment by its number between 1 - "
 										+ appointments.size());
 							}
 						} else {
@@ -122,7 +122,6 @@ public class CustomerMenu implements Menu {
 
 					Appointment appointmentUpdate = createOrUpdateAppointment(scanner);
 					appointmentUpdate.setAppointmentId(appointments.get(apptNumber - 1).getAppointmentId());
-					System.out.println(appointmentUpdate.getAppointmentId());
 
 					if (appointmentServiceImpl.update(appointmentUpdate)) {
 

@@ -43,7 +43,8 @@ public class Driver {
 		
 		CustomerMenu customerMenu = new CustomerMenu(user,userServiceImpl, appointmentServiceImpl,
 				salonServiceServiceImpl, passingMenu);
-		ManagerMenu managerMenu = new ManagerMenu(user, userServiceImpl, passingMenu);		
+		ManagerMenu managerMenu = new ManagerMenu(user, userServiceImpl,appointmentServiceImpl,
+				salonServiceServiceImpl, passingMenu);		
 		LoginMenu loginMenu = new LoginMenu(user, userServiceImpl, customerMenu, managerMenu);
 		RegistrationMenu registrationMenu = new RegistrationMenu(user, userServiceImpl, loginMenu);
 		WelcomeMenu welcomeMenu = new WelcomeMenu(loginMenu, registrationMenu);

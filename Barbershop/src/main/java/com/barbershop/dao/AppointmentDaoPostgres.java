@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import com.barbershop.pojo.Appointment;
 import com.barbershop.pojo.AppointmentInfo;
+import com.barbershop.pojo.ManagerApptInfo;
 import com.barbershop.util.ConnectionFactoryPostgres;
 
 public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
@@ -21,9 +22,54 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 	Logger log = Logger.getRootLogger();
 	private static final String CLASS_NAME = "AppointmentDaoPostgres";
 	private static final String DATABASE_ENV = "OriginalDb";
-
+	
 	@Override
-	public List<Appointment> findAll() {
+	public List<ManagerApptInfo> getAllUsersAppointmentsDetails() { // Manager
+
+		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all appointments.");
+
+//		String sql = "select * from appointment order by appointment_date, appointment_time desc";
+		String sql = "select a.appointment_id, ua.user_id, ua.first_name, ua.last_name, ua.email_address, ua.phone_number, " + 
+				"ua.user_role, ss.service_name, ss.duration , ss.price, a.appointment_date , a.appointment_time " + 
+				"from salon_service ss inner join appointment a on ss.service_id = a.service_id " + 
+				"inner join user_acc ua on ua.user_id = a.user_id " + 
+				"order by a.appointment_date , a.appointment_time desc";
+
+		List<ManagerApptInfo> appointments = null;
+
+		ManagerApptInfo appointment = null;
+
+		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+
+			appointments = new ArrayList<>();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+
+				java.sql.Date sqlDate = rs.getDate("appointment_date");
+				java.sql.Time sqlTime = rs.getTime("appointment_time");
+
+				LocalDate date = sqlDate.toLocalDate();
+				LocalTime time = sqlTime.toLocalTime();
+				appointment = new ManagerApptInfo(rs.getInt("appointment_id"), rs.getInt("user_id"),
+						rs.getString("first_name"),rs.getString("last_name"),
+						rs.getString("email_address"),rs.getString("phone_number")
+						,rs.getString("user_role"),rs.getString("service_name")
+						,rs.getString("duration"),rs.getFloat("price"),date, time);
+
+				appointments.add(appointment);
+			}
+
+		} catch (SQLException e) {
+			log.error(CLASS_NAME + ".findAll() -> Failure to get all appointments (SQLEXCEPTION)." + e.getMessage());
+		}
+		log.info(CLASS_NAME + ".findAll() -> A list of appointments returned successfully.");
+		return appointments;
+	}
+	
+	@Override
+	public List<Appointment> findAll() { // Delete later 
 
 		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all appointments.");
 
@@ -46,7 +92,7 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 				LocalDate date = sqlDate.toLocalDate();
 				LocalTime time = sqlTime.toLocalTime();
-				appointment = new Appointment(rs.getInt("appointment_id"), date, time, rs.getInt("user_id"),
+				appointment = new Appointment(rs.getInt("appointment_id"),date, time, rs.getInt("user_id"),
 						rs.getInt("service_id"));
 
 				appointments.add(appointment);
@@ -289,5 +335,7 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		}
 
 	}
+
+
 
 }

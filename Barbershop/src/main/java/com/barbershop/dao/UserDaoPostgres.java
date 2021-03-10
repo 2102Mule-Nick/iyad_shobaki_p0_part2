@@ -19,11 +19,11 @@ public class UserDaoPostgres implements UserDao<User> {
 	private static final String CLASS_NAME = "UserDaoPostgres";
 	private static final String DATABASE_ENV = "OriginalDb";
 
-	public List<User> findAll() {
+	public List<User> findAll() { // Manager
 
 		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all users.");
 
-		String sql = "select * from user_acc";
+		String sql = "select * from user_acc order by user_id asc";
 
 		List<User> users = null;
 
@@ -51,7 +51,7 @@ public class UserDaoPostgres implements UserDao<User> {
 		return users;
 	}
 
-	public boolean create(User user) {
+	public boolean create(User user) { // Users /Registration
 
 		log.info(CLASS_NAME + ".create() -> An attempt to create a user with username= " + user.getEmailAddress());
 
@@ -82,7 +82,7 @@ public class UserDaoPostgres implements UserDao<User> {
 		return false;
 	}
 
-	public boolean update(User user) {
+	public boolean update(User user) { // 
 
 		log.info(CLASS_NAME + ".update() -> An attempt to update a user with username= " + user.getEmailAddress());
 
@@ -204,16 +204,18 @@ public class UserDaoPostgres implements UserDao<User> {
 		return null;
 	}
 
-	public boolean updateUerRole(int id) {
+	public boolean updateUerRole(int id, String role) {
+		
 		log.info(CLASS_NAME + ".updateUerRole() -> An attempt to update user role with user_id= " + id);
 
 		PreparedStatement stmt = null;
 
-		String sql = "update user_acc set user_role = 'Manager' where user_id = ?";
+		String sql = "update user_acc set user_role = ? where user_id = ?";
 
 		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, id);
+			stmt.setString(1, role);
+			stmt.setInt(2, id);
 			stmt.execute();
 			log.info(CLASS_NAME + ".updateUerRole() -> User role updated successfully.");
 			return true;

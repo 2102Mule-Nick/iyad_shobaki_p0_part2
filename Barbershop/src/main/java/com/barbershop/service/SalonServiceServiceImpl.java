@@ -37,7 +37,6 @@ public class SalonServiceServiceImpl implements SalonServiceService<SalonService
 		// He has the ability to delete or update it by id later
 		try {			
 			salonServiceDao.create(service);
-			System.out.println("Salon service created successfully.");
 			return true;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
@@ -55,7 +54,6 @@ public class SalonServiceServiceImpl implements SalonServiceService<SalonService
 		}
 		try {
 			salonServiceDao.update(service);
-			System.out.println("Salon service updated successfully.");
 			return true;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
@@ -69,7 +67,6 @@ public class SalonServiceServiceImpl implements SalonServiceService<SalonService
 		
 		try {
 			salonServiceDao.deleteById(id);
-			System.out.println("Salon service with id = " + id + " deleted successfully.");
 			return true;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");

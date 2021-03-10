@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import com.barbershop.dao.AppointmentDaoPostgres;
 import com.barbershop.pojo.Appointment;
 import com.barbershop.pojo.AppointmentInfo;
+import com.barbershop.pojo.ManagerApptInfo;
 import com.barbershop.pojo.User;
 
 public class AppointmentServiceImpl implements AppointmentService<Appointment> {
@@ -24,13 +25,26 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 		super();
 		AppointmentDao = appointmentDao;
 	}
+	
 
 	@Override
-	public List<Appointment> findAll() { // Manager role
+	public List<ManagerApptInfo> getAllUsersAppointmentsDetails() { // Manager
+		try {			
+			List<ManagerApptInfo> appointments = AppointmentDao.getAllUsersAppointmentsDetails();
+			log.info("----------------------------------------------------------------------");
+			return appointments;
+		} catch (Exception e) {
+			System.out.println("Something went wrong. Please try again later!");
+			log.error(CLASS_NAME + ".findAll() -> Failure to get all appointments." + e.getMessage());
+		}
+		return null;
+	}
+
+	@Override
+	public List<Appointment> findAll() { // Manager role / delete later
 		
 		try {			
 			List<Appointment> appointments = AppointmentDao.findAll();
-			System.out.println("All appointments info returned successfully.");
 			log.info("----------------------------------------------------------------------");
 			return appointments;
 		} catch (Exception e) {
@@ -126,5 +140,6 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 		}
 		return null;
 	}
+
 
 }

@@ -268,3 +268,339 @@
 2021-03-09 22:21:42 INFO  root:154 - AppointmentDaoPostgres.getAllAppointmentsByUserId() -> An Attempt to get all appointments for user id = 4
 2021-03-09 22:21:42 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
 2021-03-09 22:21:42 INFO  root:191 - AppointmentDaoPostgres.getAllAppointmentsByUserId() -> A list of appointments for user_id 4 returned successfully.
+2021-03-10 05:05:33 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:05:33 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:05:33 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:05:33 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:05:33 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:05:33 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:05:33 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:05:34 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:05:34 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:05:34 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:05:34 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:05:34 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:05:34 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:05:34 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:05:34 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:05:34 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:05:34 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:05:34 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:05:37 INFO  root:29 - AppointmentDaoPostgres.findAll() -> An Attempt to get all appointments.
+2021-03-10 05:05:37 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:05:37 INFO  root:67 - AppointmentDaoPostgres.findAll() -> A list of appointments returned successfully.
+2021-03-10 05:05:37 INFO  root:34 - ----------------------------------------------------------------------
+2021-03-10 05:10:19 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= sue@storm.net is exist or not.
+2021-03-10 05:10:19 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:19 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:10:19 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= sue@storm.net
+2021-03-10 05:10:19 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= sue@storm.net is exist or not.
+2021-03-10 05:10:19 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:19 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:10:19 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:19 INFO  root:203 - UserDaoPostgres.getUserInfo() -> Invalid username or password.
+2021-03-10 05:10:26 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= admin is exist or not.
+2021-03-10 05:10:26 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:26 INFO  root:153 - UserDaoPostgres.isExist() -> Username is not exist.
+2021-03-10 05:10:26 INFO  root:115 - UserServiceImpl.getUserInfo() -> Username is not exist.
+2021-03-10 05:10:39 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:10:39 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:39 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:10:39 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:10:39 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:10:39 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:39 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:10:39 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:39 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:10:39 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:10:39 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:39 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:10:39 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:10:39 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:10:39 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:39 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:10:39 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:39 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:10:41 INFO  root:29 - AppointmentDaoPostgres.findAll() -> An Attempt to get all appointments.
+2021-03-10 05:10:41 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:10:41 INFO  root:67 - AppointmentDaoPostgres.findAll() -> A list of appointments returned successfully.
+2021-03-10 05:10:41 INFO  root:34 - ----------------------------------------------------------------------
+2021-03-10 05:15:29 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:15:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:15:30 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:15:30 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:15:30 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:15:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:15:30 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:15:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:15:30 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:15:30 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:15:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:15:30 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:15:30 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:15:30 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:15:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:15:30 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:15:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:15:30 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:15:33 INFO  root:24 - UserDaoPostgres.findAll() -> An Attempt to get all users.
+2021-03-10 05:15:33 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:15:33 INFO  root:50 - UserDaoPostgres.findAll() -> A list of users returned successfully.
+2021-03-10 05:18:13 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:18:14 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:18:14 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:18:14 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:18:14 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:18:14 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:18:14 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:18:14 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:18:14 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:18:14 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:18:14 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:18:14 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:18:14 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:18:14 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:18:14 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:18:14 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:18:14 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:18:14 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:18:16 INFO  root:24 - UserDaoPostgres.findAll() -> An Attempt to get all users.
+2021-03-10 05:18:16 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:18:16 INFO  root:50 - UserDaoPostgres.findAll() -> A list of users returned successfully.
+2021-03-10 05:19:59 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:20:00 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:20:00 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:20:00 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:20:00 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:20:00 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:20:00 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:20:00 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:20:00 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:20:00 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:20:00 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:20:00 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:20:00 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:20:00 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:20:00 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:20:00 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:20:01 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:20:01 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:20:02 INFO  root:24 - UserDaoPostgres.findAll() -> An Attempt to get all users.
+2021-03-10 05:20:02 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:20:02 INFO  root:50 - UserDaoPostgres.findAll() -> A list of users returned successfully.
+2021-03-10 05:42:25 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:42:25 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:42:25 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:42:25 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:42:25 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:42:25 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:42:25 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:42:26 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:42:26 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:42:26 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:42:26 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:42:26 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:42:26 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:42:26 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:42:26 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:42:26 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:42:26 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:42:26 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:42:30 INFO  root:24 - UserDaoPostgres.findAll() -> An Attempt to get all users.
+2021-03-10 05:42:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:42:30 INFO  root:50 - UserDaoPostgres.findAll() -> A list of users returned successfully.
+2021-03-10 05:42:36 INFO  root:24 - UserDaoPostgres.findAll() -> An Attempt to get all users.
+2021-03-10 05:42:36 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:42:36 INFO  root:50 - UserDaoPostgres.findAll() -> A list of users returned successfully.
+2021-03-10 05:45:30 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:45:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:45:30 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:45:30 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:45:30 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:45:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:45:30 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:45:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:45:30 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:45:30 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:45:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:45:30 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:45:30 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:45:30 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:45:30 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:45:30 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:45:31 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:45:31 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:45:33 INFO  root:24 - UserDaoPostgres.findAll() -> An Attempt to get all users.
+2021-03-10 05:45:33 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:45:33 INFO  root:50 - UserDaoPostgres.findAll() -> A list of users returned successfully.
+2021-03-10 05:45:42 INFO  root:209 - UserDaoPostgres.updateUerRole() -> An attempt to update user role with user_id= 2
+2021-03-10 05:45:42 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:45:42 INFO  root:220 - UserDaoPostgres.updateUerRole() -> User role updated successfully.
+2021-03-10 05:45:55 INFO  root:24 - UserDaoPostgres.findAll() -> An Attempt to get all users.
+2021-03-10 05:45:55 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:45:55 INFO  root:50 - UserDaoPostgres.findAll() -> A list of users returned successfully.
+2021-03-10 05:51:37 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:51:37 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:51:37 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:51:37 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:51:37 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:51:37 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:51:37 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:51:38 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:51:38 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:51:38 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:51:38 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:51:38 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:51:38 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:51:38 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:51:38 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:51:38 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:51:38 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:51:38 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:51:40 INFO  root:25 - SalonServiceDaoPostgres.findAll() -> An Attempt to get all salon services.
+2021-03-10 05:51:41 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:51:41 INFO  root:50 - SalonServiceDaoPostgres.findAll() -> A list of salon services returned successfully.
+2021-03-10 05:55:56 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:55:57 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:55:57 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:55:57 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:55:57 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:55:57 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:55:57 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:55:57 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:55:57 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:55:57 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:55:57 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:55:57 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:55:57 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:55:57 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:55:57 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:55:57 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:55:57 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:55:57 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:56:03 INFO  root:25 - SalonServiceDaoPostgres.findAll() -> An Attempt to get all salon services.
+2021-03-10 05:56:03 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:56:03 INFO  root:50 - SalonServiceDaoPostgres.findAll() -> A list of salon services returned successfully.
+2021-03-10 05:56:37 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:56:38 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:56:38 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:56:38 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:56:38 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:56:38 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:56:38 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:56:38 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:56:38 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:56:38 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:56:38 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:56:38 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:56:38 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 05:56:38 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 05:56:38 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:56:38 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 05:56:38 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:56:38 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 05:56:39 INFO  root:25 - SalonServiceDaoPostgres.findAll() -> An Attempt to get all salon services.
+2021-03-10 05:56:40 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 05:56:40 INFO  root:50 - SalonServiceDaoPostgres.findAll() -> A list of salon services returned successfully.
+2021-03-10 06:08:34 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:08:34 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:08:34 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:08:34 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 06:08:34 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:08:34 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:08:34 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:08:35 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:08:35 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 06:08:35 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:08:35 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:08:35 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:08:35 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 06:08:35 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:08:35 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:08:35 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:08:35 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:08:35 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 06:09:11 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:09:11 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:09:11 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:09:11 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 06:09:11 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:09:11 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:09:11 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:09:11 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:09:12 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 06:09:12 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:09:12 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:09:12 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:09:12 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 06:09:12 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:09:12 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:09:12 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:09:12 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:09:12 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 06:09:17 INFO  root:25 - SalonServiceDaoPostgres.findAll() -> An Attempt to get all salon services.
+2021-03-10 06:09:17 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:09:17 INFO  root:50 - SalonServiceDaoPostgres.findAll() -> A list of salon services returned successfully.
+2021-03-10 06:10:37 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:10:37 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:10:37 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:10:37 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 06:10:37 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:10:37 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:10:37 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:10:37 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:10:37 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 06:10:37 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:10:37 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:10:37 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:10:37 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 06:10:37 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:10:37 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:10:37 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:10:37 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:10:37 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 06:12:15 INFO  root:57 - SalonServiceDaoPostgres.create() -> An attempt to create a salon service with name= KIDS CUT
+2021-03-10 06:12:15 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:12:15 INFO  root:73 - SalonServiceDaoPostgres.create() -> Salon service created successfuly.
+2021-03-10 06:13:37 INFO  root:25 - SalonServiceDaoPostgres.findAll() -> An Attempt to get all salon services.
+2021-03-10 06:13:37 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:13:37 INFO  root:50 - SalonServiceDaoPostgres.findAll() -> A list of salon services returned successfully.
+2021-03-10 06:28:08 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:28:08 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:28:09 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:28:09 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 06:28:09 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:28:09 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:28:09 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:28:09 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:28:09 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 06:28:09 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:28:09 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:28:09 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:28:09 INFO  root:167 - UserDaoPostgres.getUserInfo() -> An attempt to get user with username= iyad@shobaki.com
+2021-03-10 06:28:09 INFO  root:138 - UserDaoPostgres.isExist() -> An attempt to check if a user with username= iyad@shobaki.com is exist or not.
+2021-03-10 06:28:09 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:28:09 INFO  root:150 - UserDaoPostgres.isExist() -> Username is already exist.
+2021-03-10 06:28:09 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:28:09 INFO  root:199 - UserDaoPostgres.getUserInfo() -> User info returned successfully. Valid username and password.
+2021-03-10 06:28:36 INFO  root:57 - SalonServiceDaoPostgres.create() -> An attempt to create a salon service with name= test
+2021-03-10 06:28:36 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:28:36 INFO  root:73 - SalonServiceDaoPostgres.create() -> Salon service created successfuly.
+2021-03-10 06:28:45 INFO  root:25 - SalonServiceDaoPostgres.findAll() -> An Attempt to get all salon services.
+2021-03-10 06:28:45 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:28:45 INFO  root:50 - SalonServiceDaoPostgres.findAll() -> A list of salon services returned successfully.
+2021-03-10 06:28:56 INFO  root:25 - SalonServiceDaoPostgres.findAll() -> An Attempt to get all salon services.
+2021-03-10 06:28:56 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:28:56 INFO  root:50 - SalonServiceDaoPostgres.findAll() -> A list of salon services returned successfully.
+2021-03-10 06:30:14 INFO  root:88 - SalonServiceDaoPostgres.update() -> An attempt to update a salon service with name= test iyad
+2021-03-10 06:30:14 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:30:14 INFO  root:104 - SalonServiceDaoPostgres.update() -> Salon service updated successfully.
+2021-03-10 06:30:32 INFO  root:25 - SalonServiceDaoPostgres.findAll() -> An Attempt to get all salon services.
+2021-03-10 06:30:32 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:30:32 INFO  root:50 - SalonServiceDaoPostgres.findAll() -> A list of salon services returned successfully.
+2021-03-10 06:30:43 INFO  root:25 - SalonServiceDaoPostgres.findAll() -> An Attempt to get all salon services.
+2021-03-10 06:30:43 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:30:43 INFO  root:50 - SalonServiceDaoPostgres.findAll() -> A list of salon services returned successfully.
+2021-03-10 06:30:46 INFO  root:117 - SalonServiceDaoPostgres.deleteById() -> An attempt to delete a salon service with id= 5
+2021-03-10 06:30:46 INFO  root:48 - ConnectionFactoryPostgres.createConnection() -> Connecting to DB succeedded!
+2021-03-10 06:30:46 INFO  root:127 - SalonServiceDaoPostgres.deleteById() -> Salon service deleted successfully.

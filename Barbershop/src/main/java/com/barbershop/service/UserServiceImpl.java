@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService<User> {
 
 		try {
 			List<User> users = userDao.findAll();
-			System.out.println("All users info returned successfully.");
 			return users;
 		} catch (Exception e) {
 			System.out.println("Something went wrong. Please try again later!");
@@ -123,6 +122,14 @@ public class UserServiceImpl implements UserService<User> {
 			log.error(CLASS_NAME + ".getUserInfo() -> Failure to get user info." + e.getMessage());
 		}
 		return null;
+	}
+
+	@Override
+	public boolean updateUerRole(int id, String role) {
+		if (userDao.updateUerRole(id, role)) {
+			return true;
+		}
+		return false;
 	}
 
 }

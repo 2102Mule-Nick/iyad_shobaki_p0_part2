@@ -5,11 +5,15 @@ import java.time.LocalTime;
 import java.util.List;
 
 import com.barbershop.pojo.AppointmentInfo;
+import com.barbershop.pojo.ManagerApptInfo;
 
 public interface AppointmentService<Appointment> extends BaseService<Appointment> {
 
-		//public List<LocalDate> getAllAppointmentsDates();
-		public List<LocalTime> getAllAppointmentsTimeByDate(LocalDate date);
-		//public boolean isAppointmentExist(LocalDate date, LocalTime time);
-		public List<AppointmentInfo> getAllAppointmentsByUserId(int id);
+	public List<ManagerApptInfo> getAllUsersAppointmentsDetails();
+
+	// public List<LocalDate> getAllAppointmentsDates();
+	public List<LocalTime> getAllAppointmentsTimeByDate(LocalDate date);
+
+	// public boolean isAppointmentExist(LocalDate date, LocalTime time);
+	public List<AppointmentInfo> getAllAppointmentsByUserId(int id);
 }
