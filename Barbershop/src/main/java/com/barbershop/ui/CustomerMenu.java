@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.barbershop.pojo.Appointment;
+import com.barbershop.pojo.AppointmentInfo;
 import com.barbershop.pojo.SalonService;
 import com.barbershop.pojo.User;
 import com.barbershop.service.AppointmentServiceImpl;
@@ -42,13 +43,13 @@ public class CustomerMenu implements Menu {
 	public void displayOptions(Scanner scanner) {
 
 		System.out.println("\t------------    -------------------------------------     ------------");
-		System.out.println("\t------------      Welcome, " + user.getFirstName()
-				+ " To The Customer Menu       ------------");
+		System.out.println(
+				"\t------------      Welcome, " + user.getFirstName() + " To The Customer Menu       ------------");
 		System.out.println("\t------------    -------------------------------------     ------------");
 
 		printMenu();
 
-		List<Appointment> appointments = null;
+		List<AppointmentInfo> appointments = null;
 
 		boolean logout = false;
 
@@ -64,24 +65,8 @@ public class CustomerMenu implements Menu {
 				logout = true;
 				break;
 			case 1:
-//				System.out.println(
-//						"Please enter a date (mm/dd/yyyy format). Between today's date and 30 days from now: ");
-//				LocalDate appointmentDate = validateDate(scanner);
-//
-//				System.out.println("Available time on " + appointmentDate + ":");
-//
-//				LocalTime appointmentTime = validateTime(scanner, appointmentDate);
-//
-//				System.out.println(appointmentDate + " " + appointmentTime);
-//
-//				System.out.println("Available Salon serices are:");
-//
-//				int service_id = pickSalonService(scanner);
-//				System.out.println(service_id);
-//
-//				Appointment appointment = new Appointment(appointmentDate, appointmentTime, this.user.getUserId(),
-//						service_id);
-
+				
+				System.out.println("***********************************************");
 				Appointment appointment = createOrUpdateAppointment(scanner);
 
 				if (appointmentServiceImpl.create(appointment)) {
@@ -91,21 +76,22 @@ public class CustomerMenu implements Menu {
 				} else {
 					System.out.println("Something went wrong! Please try again.");
 				}
-
+				System.out.println("***********************************************");
 				break;
 			case 2:
+				System.out.println("***********************************************");
 				appointments = appointmentServiceImpl.getAllAppointmentsByUserId(this.user.getUserId());
 				System.out.println("All appointments:");
-				// appointments =
-				// appointmentServiceImpl.getAllAppointmentsByUserId(this.user.getUserId());
 				if (appointments.size() < 1) {
 					System.out.println("There are no appoinments found.");
 				}
-				for (Appointment appt : appointments) {
+				for (AppointmentInfo appt : appointments) {
 					System.out.println(appt);
 				}
+				System.out.println("***********************************************");
 				break;
 			case 3:
+				System.out.println("***********************************************");
 				appointments = appointmentServiceImpl.getAllAppointmentsByUserId(this.user.getUserId());
 				if (appointments.size() < 1) {
 					System.out.println("There are no appoinments found.");
@@ -147,8 +133,12 @@ public class CustomerMenu implements Menu {
 						System.out.println("Something went wrong! Please try again.");
 					}
 				}
+				
+				System.out.println("***********************************************");
 				break;
 			case 4:
+				
+				System.out.println("***********************************************");
 				appointments = appointmentServiceImpl.getAllAppointmentsByUserId(this.user.getUserId());
 				if (appointments.size() < 1) {
 					System.out.println("There are no appoinments found.");
@@ -193,6 +183,7 @@ public class CustomerMenu implements Menu {
 						System.out.println("Something went wrong! Please try again.");
 					}
 				}
+				System.out.println("***********************************************");
 				break;
 			case 9:
 				printMenu();
@@ -205,15 +196,18 @@ public class CustomerMenu implements Menu {
 
 		System.out.println("Please enter a date (mm/dd/yyyy format). Between today's date and 30 days from now: ");
 		LocalDate appointmentDate = validateDate(scanner);
-
+		System.out.println();
+		System.out.println("***********************************************");
 		System.out.println("Available time on " + appointmentDate + ":");
-
+		System.out.println("***********************************************");
+		
 		LocalTime appointmentTime = validateTime(scanner, appointmentDate);
 
-		System.out.println(appointmentDate + " " + appointmentTime);
-
+		System.out.println();
+		System.out.println("***********************************************");
 		System.out.println("Available Salon serices are:");
-
+		System.out.println("***********************************************");
+		
 		int service_id = pickSalonService(scanner);
 
 		Appointment appointment = new Appointment(appointmentDate, appointmentTime, this.user.getUserId(), service_id);
@@ -275,16 +269,17 @@ public class CustomerMenu implements Menu {
 		int timeInt = 0;
 		do {
 
-			if (scanner.hasNextInt()) {
-				timeInt = scanner.nextInt();
-				if (timeInt >= 1 && timeInt <= availabeAppointmentsTime.size()) {
-					flag = false;
-				} else {
-					System.out.println("Invalid input. Please pick a time by its number between 1 - "
-							+ availabeAppointmentsTime.size());
-				}
-			} else {
+			while (!scanner.hasNextInt()) {
 				System.out.println("Invalid input. Please try again with valid number:");
+				scanner.next();
+			}
+			
+			timeInt = scanner.nextInt();
+			if (timeInt >= 1 && timeInt <= availabeAppointmentsTime.size()) {
+				flag = false;
+			} else {
+				System.out.println("Invalid input. Please pick a time by its number between 1 - "
+						+ availabeAppointmentsTime.size());
 			}
 		} while (flag);
 
@@ -357,13 +352,13 @@ public class CustomerMenu implements Menu {
 
 	}
 
-	private void clearUserInfo(User user) {
-		user.setUserId(0);
-		user.setFirstName("");
-		user.setLastName("");
-		user.setEmailAddress("");
-		user.setPhoneNumber("");
-		user.setPassword("");
-	}
+//	private void clearUserInfo(User user) { // for later (logout functionality)
+//		user.setUserId(0);
+//		user.setFirstName("");
+//		user.setLastName("");
+//		user.setEmailAddress("");
+//		user.setPhoneNumber("");
+//		user.setPassword("");
+//	}
 
 }

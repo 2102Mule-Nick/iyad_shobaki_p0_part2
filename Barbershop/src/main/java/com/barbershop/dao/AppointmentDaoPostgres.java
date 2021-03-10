@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.barbershop.pojo.Appointment;
+import com.barbershop.pojo.AppointmentInfo;
 import com.barbershop.util.ConnectionFactoryPostgres;
 
 public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
@@ -148,17 +149,20 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 //	}
 
 	@Override
-	public List<Appointment> getAllAppointmentsByUserId(int id) {
+	public List<AppointmentInfo> getAllAppointmentsByUserId(int id) {
 
 		log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> An Attempt to get all appointments for user id = " + id);
 
 		PreparedStatement stmt = null;
 
-		String sql = "select * from appointment where user_id = ? order by appointment_date, appointment_time desc";
+		String sql = "select a.appointment_id, ss.service_name, ss.duration , ss.price, a.appointment_date , a.appointment_time " + 
+				"from salon_service ss inner join appointment a on ss.service_id = a.service_id " + 
+				"where user_id = ?" + 
+				"order by a.appointment_date , a.appointment_time desc";
 
-		List<Appointment> appointments = null;
+		List<AppointmentInfo> appointments = null;
 
-		Appointment appointment = null;
+		AppointmentInfo appointment = null;
 
 		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
 
@@ -174,8 +178,8 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 				LocalDate date = sqlDate.toLocalDate();
 				LocalTime time = sqlTime.toLocalTime();
-				appointment = new Appointment(rs.getInt("appointment_id"), date, time, rs.getInt("user_id"),
-						rs.getInt("service_id"));
+				appointment = new AppointmentInfo(rs.getInt("appointment_id"),rs.getString("service_name"),
+						 rs.getString("duration"), rs.getFloat("price"),date, time);
 
 				appointments.add(appointment);
 			}
@@ -187,6 +191,46 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> A list of appointments for user_id " + id
 				+ " returned successfully.");
 		return appointments;
+		
+		
+		// old
+//		log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> An Attempt to get all appointments for user id = " + id);
+//
+//		PreparedStatement stmt = null;
+//
+//		String sql = "select * from appointment where user_id = ? order by appointment_date, appointment_time desc";
+//
+//		List<Appointment> appointments = null;
+//
+//		Appointment appointment = null;
+//
+//		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+//
+//			appointments = new ArrayList<>();
+//			stmt = conn.prepareStatement(sql);
+//			stmt.setInt(1, id);
+//			ResultSet rs = stmt.executeQuery();
+//
+//			while (rs.next()) {
+//
+//				java.sql.Date sqlDate = rs.getDate("appointment_date");
+//				java.sql.Time sqlTime = rs.getTime("appointment_time");
+//
+//				LocalDate date = sqlDate.toLocalDate();
+//				LocalTime time = sqlTime.toLocalTime();
+//				appointment = new Appointment(rs.getInt("appointment_id"), date, time, rs.getInt("user_id"),
+//						rs.getInt("service_id"));
+//
+//				appointments.add(appointment);
+//			}
+//
+//		} catch (SQLException e) {
+//			log.error(CLASS_NAME + ".getAllAppointmentsByUserId() -> Failure to connect to DB (SQLEXCEPTION)."
+//					+ e.getMessage());
+//		}
+//		log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> A list of appointments for user_id " + id
+//				+ " returned successfully.");
+//		return appointments;
 	}
 
 	@Override

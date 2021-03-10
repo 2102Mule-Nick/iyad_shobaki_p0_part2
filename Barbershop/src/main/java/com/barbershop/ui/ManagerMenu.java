@@ -28,7 +28,8 @@ public class ManagerMenu implements Menu {
 	public void displayOptions(Scanner scanner) {
 		
 		System.out.println("\t------------    -------------------------------------     ------------");
-		System.out.println("\t------------      Welcome, " + this.user.getFirstName() + " To The Manager Menu            ------------");
+		System.out.println("\t------------      Welcome, " + user.getFirstName()
+				+ " To The Manager Menu       ------------");
 		System.out.println("\t------------    -------------------------------------     ------------");
 
 

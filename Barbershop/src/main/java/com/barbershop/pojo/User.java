@@ -98,8 +98,9 @@ public class User {
 	// Override methods
 	@Override
 	public String toString() {
-		return "User [Id= " + getUserId() + ", First Name= " + getFirstName() + ", Last Name= " + getLastName() + ", Email Address= "
-				+ getEmailAddress() + ", role= " + getRole() + "]";
+		return "User Id: " + getUserId() + ", First Name: " + getFirstName() + ", Last Name: " 
+				+ getLastName() + ", Email Address: "
+				+ getEmailAddress() + ", role: " + getRole() + "]";
 	}
 
 }

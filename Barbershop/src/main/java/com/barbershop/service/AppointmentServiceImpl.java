@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.barbershop.dao.AppointmentDaoPostgres;
 import com.barbershop.pojo.Appointment;
+import com.barbershop.pojo.AppointmentInfo;
 import com.barbershop.pojo.User;
 
 public class AppointmentServiceImpl implements AppointmentService<Appointment> {
@@ -113,9 +114,9 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	}
 
 	@Override
-	public List<Appointment> getAllAppointmentsByUserId(int id) { // Users
+	public List<AppointmentInfo> getAllAppointmentsByUserId(int id) { // Users
 		
-		List<Appointment> apptsByUser = new ArrayList<>();
+		List<AppointmentInfo> apptsByUser = new ArrayList<>();
 		try {
 			apptsByUser = AppointmentDao.getAllAppointmentsByUserId(id);
 			return apptsByUser;

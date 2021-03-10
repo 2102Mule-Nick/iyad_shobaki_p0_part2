@@ -34,7 +34,7 @@ public class Driver {
 		
 		UserDaoPostgres userDao = new UserDaoPostgres();
 		UserServiceImpl userServiceImpl = new UserServiceImpl(userDao);
-		WelcomeMenu passingMenu = new WelcomeMenu();
+		WelcomeMenu passingMenu = new WelcomeMenu(); // For later (logout functionality)
 		AppointmentDaoPostgres appointmentDao = new AppointmentDaoPostgres();
 		AppointmentServiceImpl appointmentServiceImpl = new AppointmentServiceImpl(appointmentDao);
 		SalonServiceDaoPostgres salonServiceDao = new SalonServiceDaoPostgres();

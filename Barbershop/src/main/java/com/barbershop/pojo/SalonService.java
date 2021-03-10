@@ -72,8 +72,8 @@ public class SalonService {
 	// Override methods
 	@Override
 	public String toString() {
-		return "Salon Service [Service Name= " + getServiceName() + ", Description=" + getDescription() + ", Duration= "
-				+ getDuration() + ", Price= " + getPrice() + "]";
+		return "Salon Service Name: " + getServiceName() + "\n\tDescription: " + getDescription() + "\n\tDuration: "
+				+ getDuration() + "\n\tPrice: " + getPrice() ;
 	}
 
 }
