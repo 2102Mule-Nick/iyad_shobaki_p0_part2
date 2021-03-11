@@ -14,16 +14,15 @@ public class UserServiceImpl implements UserService<User> {
 	Logger log = Logger.getRootLogger();
 	private UserDaoPostgres userDao;
 	private static final String CLASS_NAME = "UserServiceImpl";
-
-	private static final String DATABASE_ENV = "OriginalDb";
+	private Connection connection;
 	
-	Connection connection = ConnectionFactoryPostgres.getConnection(DATABASE_ENV);
 	
 	// Constructor
-	public UserServiceImpl(UserDaoPostgres userDao) {
+	public UserServiceImpl(UserDaoPostgres userDao,  Connection connection) {
 		super();
+		this.connection = connection;
 		this.userDao = userDao;
-		this.userDao.setConnection(connection);
+		this.userDao.setConnection(this.connection);
 	}
 
 	@Override

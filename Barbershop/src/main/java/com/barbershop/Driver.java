@@ -1,5 +1,6 @@
 package com.barbershop;
 
+import java.sql.Connection;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,12 +20,15 @@ import com.barbershop.ui.ManagerMenu;
 import com.barbershop.ui.Menu;
 import com.barbershop.ui.RegistrationMenu;
 import com.barbershop.ui.WelcomeMenu;
+import com.barbershop.util.ConnectionFactoryPostgres;
 
 public class Driver {
 
 	public static Scanner scanner = new Scanner(System.in);
 	public static User user = new User();
-
+	
+	private static Connection connection = ConnectionFactoryPostgres.getConnection("OriginalDb");
+	
 	public static void main(String[] args) {
 
 		System.out.println("\t------------    Welcome To The Barbershop Application     ------------");
@@ -33,12 +37,12 @@ public class Driver {
 	
 		
 		UserDaoPostgres userDao = new UserDaoPostgres();
-		UserServiceImpl userServiceImpl = new UserServiceImpl(userDao);
+		UserServiceImpl userServiceImpl = new UserServiceImpl(userDao, connection);
 		WelcomeMenu passingMenu = new WelcomeMenu(); // For later (logout functionality)
 		AppointmentDaoPostgres appointmentDao = new AppointmentDaoPostgres();
-		AppointmentServiceImpl appointmentServiceImpl = new AppointmentServiceImpl(appointmentDao);
+		AppointmentServiceImpl appointmentServiceImpl = new AppointmentServiceImpl(appointmentDao, connection);
 		SalonServiceDaoPostgres salonServiceDao = new SalonServiceDaoPostgres();
-		SalonServiceServiceImpl salonServiceServiceImpl = new SalonServiceServiceImpl(salonServiceDao);
+		SalonServiceServiceImpl salonServiceServiceImpl = new SalonServiceServiceImpl(salonServiceDao, connection);
 		
 		
 		CustomerMenu customerMenu = new CustomerMenu(user,userServiceImpl, appointmentServiceImpl,

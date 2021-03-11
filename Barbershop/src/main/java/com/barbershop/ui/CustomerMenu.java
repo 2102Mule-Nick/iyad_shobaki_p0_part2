@@ -61,12 +61,27 @@ public class CustomerMenu implements Menu {
 			case 0:
 				System.out.println("You are successfully logout. Thank you!");
 //				clearUserInfo(user);
-//				nextMenu = welcomeMenu;   // need to pass menus
+//				nextMenu = welcomeMenu;   // need to pass menus 
 				logout = true;
 				break;
 			case 1:
 				
+				System.out.println("************* ALL APPOINTMENTS *********************");
+				appointments = appointmentServiceImpl.getAllAppointmentsByUserId(this.user.getUserId());
+				System.out.println();
+				if (appointments.size() < 1) {
+					System.out.println("There are no appoinments found.");
+				}
+				for (AppointmentInfo appt : appointments) {
+					System.out.println(appt);
+				}
 				System.out.println("***********************************************");
+				
+				break;
+			case 2:
+				
+				System.out.println("************* BOOK AN APPOINTMENT *********************");
+				System.out.println();
 				Appointment appointment = createOrUpdateAppointment(scanner);
 
 				if (appointmentServiceImpl.create(appointment)) {
@@ -78,20 +93,9 @@ public class CustomerMenu implements Menu {
 				}
 				System.out.println("***********************************************");
 				break;
-			case 2:
-				System.out.println("***********************************************");
-				appointments = appointmentServiceImpl.getAllAppointmentsByUserId(this.user.getUserId());
-				System.out.println("All appointments:");
-				if (appointments.size() < 1) {
-					System.out.println("There are no appoinments found.");
-				}
-				for (AppointmentInfo appt : appointments) {
-					System.out.println(appt);
-				}
-				System.out.println("***********************************************");
-				break;
 			case 3:
-				System.out.println("***********************************************");
+				System.out.println("************* UPDATE AN APPOINTMENT *********************");
+				System.out.println();
 				appointments = appointmentServiceImpl.getAllAppointmentsByUserId(this.user.getUserId());
 				if (appointments.size() < 1) {
 					System.out.println("There are no appoinments found.");
@@ -100,7 +104,8 @@ public class CustomerMenu implements Menu {
 					for (int i = 0; i < appointments.size(); i++) {
 						System.out.println((i + 1) + "- " + appointments.get(i));
 					}
-					System.out.println("Please choose appointment by number between 1 - " + appointments.size() + ":");
+					System.out.println(
+							"Please choose appointment by number between 1 - " + appointments.size() + " to update:");
 					boolean flag = true;
 
 					int apptNumber = 0;
@@ -111,8 +116,9 @@ public class CustomerMenu implements Menu {
 							if (apptNumber >= 1 && apptNumber <= appointments.size()) {
 								flag = false;
 							} else {
-								System.out.println("Invalid input. Please pick an appointment by its number between 1 - "
-										+ appointments.size());
+								System.out
+										.println("Invalid input. Please pick an appointment by its number between 1 - "
+												+ appointments.size());
 							}
 						} else {
 							System.out.println("Invalid input. Please try again with a valid number:");
@@ -121,6 +127,7 @@ public class CustomerMenu implements Menu {
 					scanner.nextLine();
 
 					Appointment appointmentUpdate = createOrUpdateAppointment(scanner);
+
 					appointmentUpdate.setAppointmentId(appointments.get(apptNumber - 1).getAppointmentId());
 
 					if (appointmentServiceImpl.update(appointmentUpdate)) {
@@ -132,12 +139,13 @@ public class CustomerMenu implements Menu {
 						System.out.println("Something went wrong! Please try again.");
 					}
 				}
-				
+
 				System.out.println("***********************************************");
 				break;
 			case 4:
-				
-				System.out.println("***********************************************");
+
+				System.out.println("************* DELETE AN APPOINTMENT *********************");
+				System.out.println();
 				appointments = appointmentServiceImpl.getAllAppointmentsByUserId(this.user.getUserId());
 				if (appointments.size() < 1) {
 					System.out.println("There are no appoinments found.");
@@ -146,7 +154,8 @@ public class CustomerMenu implements Menu {
 					for (int i = 0; i < appointments.size(); i++) {
 						System.out.println((i + 1) + "- " + appointments.get(i));
 					}
-					System.out.println("Please choose appointment by number between 1 - " + appointments.size() + ":");
+					System.out.println(
+							"Please choose appointment by number between 1 - " + appointments.size() + " to delete:");
 					boolean flag = true;
 
 					int apptNumber = 0;
@@ -199,14 +208,14 @@ public class CustomerMenu implements Menu {
 		System.out.println("***********************************************");
 		System.out.println("Available time on " + appointmentDate + ":");
 		System.out.println("***********************************************");
-		
+
 		LocalTime appointmentTime = validateTime(scanner, appointmentDate);
 
 		System.out.println();
 		System.out.println("***********************************************");
 		System.out.println("Available Salon serices are:");
 		System.out.println("***********************************************");
-		
+
 		int service_id = pickSalonService(scanner);
 
 		Appointment appointment = new Appointment(appointmentDate, appointmentTime, this.user.getUserId(), service_id);
@@ -238,7 +247,7 @@ public class CustomerMenu implements Menu {
 			}
 		} while (flag);
 
-		return serviceNumber;
+		return services.get(serviceNumber - 1).getServiceId();
 	}
 
 	private LocalTime validateTime(Scanner scanner, LocalDate appointmentDate) {
@@ -272,7 +281,7 @@ public class CustomerMenu implements Menu {
 				System.out.println("Invalid input. Please try again with valid number:");
 				scanner.next();
 			}
-			
+
 			timeInt = scanner.nextInt();
 			if (timeInt >= 1 && timeInt <= availabeAppointmentsTime.size()) {
 				flag = false;
@@ -283,18 +292,7 @@ public class CustomerMenu implements Menu {
 		} while (flag);
 
 		return availabeAppointmentsTime.get(timeInt - 1);
-//		
-//		List<LocalTime> availabeAppointmentsTime = new ArrayList<>();
-//		List<LocalTime> bookedAppointmentsTime = appointmentServiceImpl.getAllAppointmentsTimeByDate(appointmentDate);
-//		
-//		for(float i = 10f; i< 20f; i+=0.45f) {
-//			DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm"); // LocalTime time =
-//			LocalTime time = LocalTime.parse(String.format("%.2f", i), timeFormatter);
-//			availabeAppointmentsTime.add(time);
-//		}
-//		
-//		System.out.println(appointmentServiceImpl.getAllAppointmentsTimeByDate(appointmentDate));				
-//		System.out.println("Please pick a time :");
+
 	}
 
 	private enum TimeOfDay {
@@ -346,7 +344,7 @@ public class CustomerMenu implements Menu {
 	 */
 	private static void printMenu() {
 		System.out.println("Available actions:\npress");
-		System.out.println("0 - to quit\n" + "1 - Book an appointment\n" + "2 - See all appointments\n"
+		System.out.println("0 - to quit\n" + "1 - See all appointments\n" + "2 - Book an appointment\n"
 				+ "3 - Update an appointment\n" + "4 - Delete an appointment\n" + "9 - Print available actions");
 
 	}
@@ -361,3 +359,19 @@ public class CustomerMenu implements Menu {
 //	}
 
 }
+
+
+
+
+//
+//List<LocalTime> availabeAppointmentsTime = new ArrayList<>();
+//List<LocalTime> bookedAppointmentsTime = appointmentServiceImpl.getAllAppointmentsTimeByDate(appointmentDate);
+//
+//for(float i = 10f; i< 20f; i+=0.45f) {
+//	DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm"); // LocalTime time =
+//	LocalTime time = LocalTime.parse(String.format("%.2f", i), timeFormatter);
+//	availabeAppointmentsTime.add(time);
+//}
+//
+//System.out.println(appointmentServiceImpl.getAllAppointmentsTimeByDate(appointmentDate));				
+//System.out.println("Please pick a time :");

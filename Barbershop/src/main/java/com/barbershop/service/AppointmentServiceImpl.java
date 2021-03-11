@@ -20,15 +20,15 @@ public class AppointmentServiceImpl implements AppointmentService<Appointment> {
 	Logger log = Logger.getRootLogger();
 	private AppointmentDaoPostgres appointmentDaoPostgres;
 	private static final String CLASS_NAME = "UserServiceImpl";
-	private static final String DATABASE_ENV = "OriginalDb";
+	private Connection connection;
 	
-	Connection connection = ConnectionFactoryPostgres.getConnection(DATABASE_ENV);
 	
 	// Constructor 
-	public AppointmentServiceImpl(AppointmentDaoPostgres appointmentDao) {
+	public AppointmentServiceImpl(AppointmentDaoPostgres appointmentDao,  Connection connection) {
 		super();
+		this.connection = connection;
 		this.appointmentDaoPostgres = appointmentDao;
-		this.appointmentDaoPostgres.setConnection(connection);
+		this.appointmentDaoPostgres.setConnection(this.connection);
 	}
 	
 

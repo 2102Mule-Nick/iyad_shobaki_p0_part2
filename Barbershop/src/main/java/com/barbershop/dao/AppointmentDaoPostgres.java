@@ -1,5 +1,6 @@
 package com.barbershop.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +45,6 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		ManagerApptInfo appointment = null;
 
-		// try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 		try {
 
 			appointments = new ArrayList<>();
@@ -73,43 +73,6 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		return appointments;
 	}
 
-	@Override
-	public List<Appointment> findAll() { // Delete later
-
-		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all appointments.");
-
-		String sql = "select * from appointment order by appointment_date, appointment_time desc";
-
-		List<Appointment> appointments = null;
-
-		Appointment appointment = null;
-
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
-		try {
-
-			appointments = new ArrayList<>();
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-
-			while (rs.next()) {
-
-				java.sql.Date sqlDate = rs.getDate("appointment_date");
-				java.sql.Time sqlTime = rs.getTime("appointment_time");
-
-				LocalDate date = sqlDate.toLocalDate();
-				LocalTime time = sqlTime.toLocalTime();
-				appointment = new Appointment(rs.getInt("appointment_id"), date, time, rs.getInt("user_id"),
-						rs.getInt("service_id"));
-
-				appointments.add(appointment);
-			}
-
-		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".findAll() -> Failure to get all appointments (SQLEXCEPTION)." + e.getMessage());
-		}
-		log.info(CLASS_NAME + ".findAll() -> A list of appointments returned successfully.");
-		return appointments;
-	}
 
 	@Override
 	public boolean create(Appointment appointment) {
@@ -122,10 +85,8 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		String sql = "insert into appointment (appointment_date, appointment_time, user_id, service_id)"
 				+ " values (? , ? , ? , ?)";
 
-		// try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 		try {
 
-//			stmt = conn.prepareStatement(sql);
 			stmt = connection.prepareStatement(sql);
 			stmt.setDate(1, java.sql.Date.valueOf(appointment.getAppointmentDate()));
 			stmt.setTime(2, java.sql.Time.valueOf(appointment.getAppointmentTime()));
@@ -149,14 +110,15 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		log.info(CLASS_NAME + ".update() -> An attempt to update an appointment for user_id= "
 				+ appointment.getUserId());
 
-		PreparedStatement stmt = null;
+		CallableStatement stmt = null;
+		
+		// Using a function
 
-		String sql = "update appointment set appointment_date = ?, appointment_time = ?, "
-				+ "service_id = ? where appointment_id = ?";
+		String sql = "select update_appointment(?,?,?,?);";
+		
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 		try {
-			stmt = connection.prepareStatement(sql);
+			stmt = connection.prepareCall(sql);
 			stmt.setDate(1, java.sql.Date.valueOf(appointment.getAppointmentDate()));
 			stmt.setTime(2, java.sql.Time.valueOf(appointment.getAppointmentTime()));
 			stmt.setInt(3, appointment.getServiceId());
@@ -170,6 +132,8 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		log.error(CLASS_NAME + ".update() -> Unable to update an appointment.");
 		return false;
+		
+	
 	}
 
 	@Override
@@ -181,7 +145,6 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		String sql = "delete from appointment where appointment_id = ?";
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -196,12 +159,6 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		log.error(CLASS_NAME + ".deleteById() -> Unable to delete an appointment.");
 		return false;
 	}
-
-//	@Override // Check if I need it --- Iyad
-//	public boolean isAppointmentExist(LocalDate date, LocalTime time) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
 
 	@Override
 	public List<AppointmentInfo> getAllAppointmentsByUserId(int id) {
@@ -219,7 +176,6 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		AppointmentInfo appointment = null;
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try  {
 
 			appointments = new ArrayList<>();
@@ -248,44 +204,43 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 				+ " returned successfully.");
 		return appointments;
 
-		// old
-//		log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> An Attempt to get all appointments for user id = " + id);
-//
-//		PreparedStatement stmt = null;
-//
-//		String sql = "select * from appointment where user_id = ? order by appointment_date, appointment_time desc";
-//
-//		List<Appointment> appointments = null;
-//
-//		Appointment appointment = null;
-//
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
-//
-//			appointments = new ArrayList<>();
-//			stmt = conn.prepareStatement(sql);
-//			stmt.setInt(1, id);
-//			ResultSet rs = stmt.executeQuery();
-//
-//			while (rs.next()) {
-//
-//				java.sql.Date sqlDate = rs.getDate("appointment_date");
-//				java.sql.Time sqlTime = rs.getTime("appointment_time");
-//
-//				LocalDate date = sqlDate.toLocalDate();
-//				LocalTime time = sqlTime.toLocalTime();
-//				appointment = new Appointment(rs.getInt("appointment_id"), date, time, rs.getInt("user_id"),
-//						rs.getInt("service_id"));
-//
-//				appointments.add(appointment);
-//			}
-//
-//		} catch (SQLException e) {
-//			log.error(CLASS_NAME + ".getAllAppointmentsByUserId() -> Failure to connect to DB (SQLEXCEPTION)."
-//					+ e.getMessage());
-//		}
-//		log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> A list of appointments for user_id " + id
-//				+ " returned successfully.");
-//		return appointments;
+	}
+
+	@Override
+	public List<Appointment> findAll() { // Delete later
+
+		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all appointments.");
+
+		String sql = "select * from appointment order by appointment_date, appointment_time desc";
+
+		List<Appointment> appointments = null;
+
+		Appointment appointment = null;
+
+		try {
+
+			appointments = new ArrayList<>();
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+
+				java.sql.Date sqlDate = rs.getDate("appointment_date");
+				java.sql.Time sqlTime = rs.getTime("appointment_time");
+
+				LocalDate date = sqlDate.toLocalDate();
+				LocalTime time = sqlTime.toLocalTime();
+				appointment = new Appointment(rs.getInt("appointment_id"), date, time, rs.getInt("user_id"),
+						rs.getInt("service_id"));
+
+				appointments.add(appointment);
+			}
+
+		} catch (SQLException e) {
+			log.error(CLASS_NAME + ".findAll() -> Failure to get all appointments (SQLEXCEPTION)." + e.getMessage());
+		}
+		log.info(CLASS_NAME + ".findAll() -> A list of appointments returned successfully.");
+		return appointments;
 	}
 
 	@Override
@@ -301,7 +256,6 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		LocalTime apptTime = null;
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try {
 
 			appointmentsTime = new ArrayList<>();
@@ -335,7 +289,6 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		String sql = "delete from appointment";
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try  {
 			stmt = connection.prepareStatement(sql);
 			stmt.execute();
@@ -348,3 +301,81 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 	}
 
 }
+
+
+
+
+
+// Update appointment not using function
+
+
+// Using prepared statement --- working well
+
+//log.info(CLASS_NAME + ".update() -> An attempt to update an appointment for user_id= "
+//		+ appointment.getUserId());
+//
+//PreparedStatement stmt = null;
+//
+//String sql = "update appointment set appointment_date = ?, appointment_time = ?, "
+//		+ "service_id = ? where appointment_id = ?";
+//
+//
+////try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
+//try {
+//	stmt = connection.prepareStatement(sql);
+//	stmt.setDate(1, java.sql.Date.valueOf(appointment.getAppointmentDate()));
+//	stmt.setTime(2, java.sql.Time.valueOf(appointment.getAppointmentTime()));
+//	stmt.setInt(3, appointment.getServiceId());
+//	stmt.setInt(4, appointment.getAppointmentId());
+//	stmt.execute();
+//	log.info(CLASS_NAME + ".update() -> Appointment updated successfully.");
+//	return true;
+//} catch (SQLException e) {
+//	log.error(CLASS_NAME + ".update() -> Failure to update an appointment (SQLEXCEPTION)." + e.getMessage());
+//}
+//
+//log.error(CLASS_NAME + ".update() -> Unable to update an appointment.");
+//return false;
+
+
+
+// 
+
+// old
+//log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> An Attempt to get all appointments for user id = " + id);
+//
+//PreparedStatement stmt = null;
+//
+//String sql = "select * from appointment where user_id = ? order by appointment_date, appointment_time desc";
+//
+//List<Appointment> appointments = null;
+//
+//Appointment appointment = null;
+//
+//try (Connection conn = ConnectionFactoryPostgres.getConnection(DATABASE_ENV)) {
+//
+//	appointments = new ArrayList<>();
+//	stmt = conn.prepareStatement(sql);
+//	stmt.setInt(1, id);
+//	ResultSet rs = stmt.executeQuery();
+//
+//	while (rs.next()) {
+//
+//		java.sql.Date sqlDate = rs.getDate("appointment_date");
+//		java.sql.Time sqlTime = rs.getTime("appointment_time");
+//
+//		LocalDate date = sqlDate.toLocalDate();
+//		LocalTime time = sqlTime.toLocalTime();
+//		appointment = new Appointment(rs.getInt("appointment_id"), date, time, rs.getInt("user_id"),
+//				rs.getInt("service_id"));
+//
+//		appointments.add(appointment);
+//	}
+//
+//} catch (SQLException e) {
+//	log.error(CLASS_NAME + ".getAllAppointmentsByUserId() -> Failure to connect to DB (SQLEXCEPTION)."
+//			+ e.getMessage());
+//}
+//log.info(CLASS_NAME + ".getAllAppointmentsByUserId() -> A list of appointments for user_id " + id
+//		+ " returned successfully.");
+//return appointments;

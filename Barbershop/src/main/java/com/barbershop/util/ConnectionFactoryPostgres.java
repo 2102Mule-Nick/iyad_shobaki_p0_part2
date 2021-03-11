@@ -56,6 +56,7 @@ public final class ConnectionFactoryPostgres {
 	}
 
 	public static synchronized Connection getConnection(String environment) {
+		
 		if(environment.equals("TestingDb")) {
 			DB_NAME = "barbershop_test";
 		}else {

@@ -35,7 +35,6 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		SalonService service = null;
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try {
 
 			salonServices = new ArrayList<>();
@@ -68,7 +67,6 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 		String sql = "insert into salon_service (service_name, description, duration, price)"
 				+ " values (? , ? , ? , ?)";
 		
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, service.getServiceName());
@@ -100,7 +98,6 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 		String sql = "update salon_service set service_name = ?, description = ?, duration = ?, "
 				+ "price = ? where service_id = ?";
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, service.getServiceName());
@@ -128,7 +125,6 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		String sql = "delete from salon_service where service_id = ?";
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -153,7 +149,6 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		String sql = "select * from salon_service where service_name = ?";
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, name);
@@ -190,7 +185,6 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 		SalonService service = null;
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try {
 
 			Statement stmt = connection.createStatement();
@@ -219,7 +213,6 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 		// Delete all except id # 1 to test appointment table Foreign key
 		String sql = "delete from salon_service where service_id != 1";
 
-//		try (Connection conn = ConnectionFactoryPostgres.getConnection()) {
 			try {
 			stmt = connection.prepareStatement(sql);
 			stmt.execute();

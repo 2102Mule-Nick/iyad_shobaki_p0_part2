@@ -32,7 +32,6 @@ class AppointmentDaoPostgresTest {
 	@Mock
 	private Connection fakeConnection;
 
-	private static final String DATABASE_ENV = "TestingDb";
 	public static AppointmentDaoPostgres daoPostgres;
 	public static Appointment appointment1;
 	public static Appointment appointment2;
@@ -41,7 +40,7 @@ class AppointmentDaoPostgresTest {
 	private static Connection realConnection;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		realConnection = ConnectionFactoryPostgres.getConnection(DATABASE_ENV);
+		realConnection = ConnectionFactoryPostgres.getConnection("TestingDb");
 	}
 	@BeforeEach
 	private void setUp() {
@@ -53,7 +52,7 @@ class AppointmentDaoPostgresTest {
 
 	@AfterEach
 	private void tearDown() {
-		//daoPostgres.deleteAll();
+		daoPostgres.deleteAll();
 	}
 
 	@Test
@@ -62,9 +61,6 @@ class AppointmentDaoPostgresTest {
 		// creating a real stmt to be able to actually communicate with our db
 		String sql = "insert into appointment (appointment_date, appointment_time, user_id, service_id) values (? , ? , ? , ?)";
 
-		//Connection realConnection = ConnectionFactoryPostgres.getConnection();
-
-		//PreparedStatement realStmt = realConnection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		 PreparedStatement realStmt = realConnection.prepareStatement(sql);
 
 		// Spying on our real stmt, so that we can later verify the correct methods are
@@ -75,10 +71,10 @@ class AppointmentDaoPostgresTest {
 		// if we did not do this, and used a real connection on this test, the
 		// connection would create
 		// a new statement inside of our createCart method, and we could not spy on it
-		//when(connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)).thenReturn(spy);
 		 when(fakeConnection.prepareStatement(sql)).thenReturn(spy);
 
 		 daoPostgres.setConnection(fakeConnection);
+		 
 		// call the create cart method that we are testing
 		daoPostgres.create(appointment1);
 
@@ -99,18 +95,9 @@ class AppointmentDaoPostgresTest {
 
 		assertTrue(rs.next());
 
-		// assertTrue(daoPostgres.create(appointment1));
 	}
 
-	@Test
-	void testFindAll() {
-		daoPostgres.create(appointment1);
-		daoPostgres.create(appointment2);
-		daoPostgres.create(appointment3);
-
-		assertEquals(3, daoPostgres.findAll().size());
-	}
-
+	
 	@Test
 	void testUpdate() {
 		// daoPostgres.create(appointment1);
@@ -120,6 +107,15 @@ class AppointmentDaoPostgresTest {
 		// LocalDate.now().plusDays(1), LocalTime.now().plusHours(2),1,1);
 
 		// assertTrue(daoPostgres.update(appointment1));
+	}
+
+	@Test
+	void testFindAll() {
+//		daoPostgres.create(appointment1);
+//		daoPostgres.create(appointment2);
+//		daoPostgres.create(appointment3);
+//
+//		assertEquals(3, daoPostgres.findAll().size());
 	}
 
 	@Test

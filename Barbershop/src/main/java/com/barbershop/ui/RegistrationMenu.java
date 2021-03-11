@@ -77,46 +77,15 @@ public class RegistrationMenu implements Menu {
 		}
 	}
 
-	private void clearUserInfo(User user) {
-		user.setFirstName("");
-		user.setLastName("");
-		user.setEmailAddress("");
-		user.setPhoneNumber("");
-		user.setPassword("");
-	}
-
-	/*
-	 * ((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6,16})
-	 * 
-	 * (?=.*[a-z]) : This matches the presence of at least one lowercase letter.
-	 * (?=.*d) : This matches the presence of at least one digit i.e. 0-9.
-	 * (?=.*[@#$%]) : This matches the presence of at least one special character.
-	 * ((?=.*[A-Z]) : This matches the presence of at least one capital letter.
-	 * {6,16} : This limits the length of password from minimum 6 letters to maximum
-	 * 16 letters.
-	 * 
-	 * ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$
-	 * 
-	 * ^ # start-of-string (?=.*[0-9]) # a digit must occur at least once
-	 * (?=.*[a-z]) # a lower case letter must occur at least once (?=.*[A-Z]) # an
-	 * upper case letter must occur at least once (?=.*[@#$%^&+=]) # a special
-	 * character must occur at least once (?=\S+$) # no whitespace allowed in the
-	 * entire string .{8,} # anything, at least eight places though $ #
-	 * end-of-string
-	 * 
-	 */
-
 	private String validatePassword(Scanner scanner) {
 
 		String password = null;
 		do {
 
 			password = scanner.nextLine();
-//			String regex = "((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6,16})";
+
 			String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,16}$";
-//			String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\\\S+$).{6,16}$";
-//			String regex = "(?=.*[a-z])(?=.*\\\\d)(?=.*[A-Z])(?=.*[@#$%!]).{6,16}";
-			//String regex = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,16})";
+
 			Pattern pattern = Pattern.compile(regex);
 			Matcher matcher = pattern.matcher(password);
 			if (matcher.matches()) {
@@ -162,7 +131,7 @@ public class RegistrationMenu implements Menu {
 
 			name = scanner.nextLine();
 
-//			String regex = "/^[a-z ,.'-]+$/i";
+
 			String regex = "(?i)(^[a-z])((?![ .,'-]$)[a-z .,'-]){0,24}$";
 			Pattern pattern = Pattern.compile(regex);
 			Matcher matcher = pattern.matcher(name);
@@ -197,4 +166,44 @@ public class RegistrationMenu implements Menu {
 
 		return username;
 	}
+	
+	private void clearUserInfo(User user) {
+		user.setFirstName("");
+		user.setLastName("");
+		user.setEmailAddress("");
+		user.setPhoneNumber("");
+		user.setPassword("");
+	}
 }
+
+
+
+
+//String regex = "((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6,16})";
+//String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\\\S+$).{6,16}$";
+//String regex = "(?=.*[a-z])(?=.*\\\\d)(?=.*[A-Z])(?=.*[@#$%!]).{6,16}";
+//String regex = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,16})";
+
+
+//String regex = "/^[a-z ,.'-]+$/i";
+
+/*
+ * ((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6,16})
+ * 
+ * (?=.*[a-z]) : This matches the presence of at least one lowercase letter.
+ * (?=.*d) : This matches the presence of at least one digit i.e. 0-9.
+ * (?=.*[@#$%]) : This matches the presence of at least one special character.
+ * ((?=.*[A-Z]) : This matches the presence of at least one capital letter.
+ * {6,16} : This limits the length of password from minimum 6 letters to maximum
+ * 16 letters.
+ * 
+ * ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$
+ * 
+ * ^ # start-of-string (?=.*[0-9]) # a digit must occur at least once
+ * (?=.*[a-z]) # a lower case letter must occur at least once (?=.*[A-Z]) # an
+ * upper case letter must occur at least once (?=.*[@#$%^&+=]) # a special
+ * character must occur at least once (?=\S+$) # no whitespace allowed in the
+ * entire string .{8,} # anything, at least eight places though $ #
+ * end-of-string
+ * 
+ */

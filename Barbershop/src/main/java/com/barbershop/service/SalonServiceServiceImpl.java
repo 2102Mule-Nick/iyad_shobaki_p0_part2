@@ -14,16 +14,15 @@ public class SalonServiceServiceImpl implements SalonServiceService<SalonService
 	Logger log = Logger.getRootLogger();
 	private SalonServiceDaoPostgres salonServiceDao;
 	private static final String CLASS_NAME = "SalonServiceServiceImpl";
+	private Connection connection;
 	
-	private static final String DATABASE_ENV = "OriginalDb";
-	
-	Connection connection = ConnectionFactoryPostgres.getConnection(DATABASE_ENV);
 	
 	// Constructor
-	public SalonServiceServiceImpl(SalonServiceDaoPostgres salonServiceDao) {
+	public SalonServiceServiceImpl(SalonServiceDaoPostgres salonServiceDao, Connection connection) {
 		super();
+		this.connection = connection;
 		this.salonServiceDao = salonServiceDao;
-		this.salonServiceDao.setConnection(connection);
+		this.salonServiceDao.setConnection(this.connection);
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class SalonServiceServiceImpl implements SalonServiceService<SalonService
 	@Override
 	public boolean create(SalonService service) {
 		// Since the admin who want to add a new service. I will not check for a similar service
-		// He has the ability to delete or update it by id later
+		// He has the ability to delete or update it by id later (for now)
 		try {			
 			salonServiceDao.create(service);
 			log.info("----------------------------------------------------------------------");

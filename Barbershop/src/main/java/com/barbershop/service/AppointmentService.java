@@ -11,9 +11,7 @@ public interface AppointmentService<Appointment> extends BaseService<Appointment
 
 	public List<ManagerApptInfo> getAllUsersAppointmentsDetails();
 
-	// public List<LocalDate> getAllAppointmentsDates();
 	public List<LocalTime> getAllAppointmentsTimeByDate(LocalDate date);
 
-	// public boolean isAppointmentExist(LocalDate date, LocalTime time);
 	public List<AppointmentInfo> getAllAppointmentsByUserId(int id);
 }

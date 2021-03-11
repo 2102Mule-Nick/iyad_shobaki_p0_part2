@@ -43,7 +43,7 @@ public class ManagerApptInfo {
 	public String toString() {
 		return //"Appointment ID: " + appointmentId +
 				//", User ID: "+ userId +
-				", First Name: " + firstName+
+				"First Name: " + firstName+
 				", Last Name: " + lastName+
 				", Email Address: " + emailAddress +
 				", Phone Number: " + phoneNumber +

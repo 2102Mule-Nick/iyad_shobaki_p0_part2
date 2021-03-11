@@ -61,9 +61,9 @@ public class ManagerMenu implements Menu {
 				logout = true;
 				break;
 			case 1:
-				System.out.println("***********************************************");
+				System.out.println("********** ALL USERS AND THEIR APPOINTMENTS ******************");
 				appointments = appointmentServiceImpl.getAllUsersAppointmentsDetails();
-				System.out.println("All users appointments details:");
+				System.out.println();
 				if (appointments.size() < 1) {
 					System.out.println("There are no appoinments found.");
 				}
@@ -74,9 +74,9 @@ public class ManagerMenu implements Menu {
 				System.out.println("***********************************************");
 				break;
 			case 2:
-				System.out.println("***********************************************");
+				System.out.println("********** ALL USERS INFO ******************");
 				users = userServiceImpl.findAll();
-				System.out.println("All users details:");
+				System.out.println();
 				if (users.size() < 1) {
 					System.out.println("There are no users found.");
 				}
@@ -87,7 +87,8 @@ public class ManagerMenu implements Menu {
 				System.out.println("***********************************************");
 				break;
 			case 3:
-				System.out.println("***********************************************");
+				System.out.println("********** UPDATE USER'S ROLE ******************");
+				System.out.println();
 				users = userServiceImpl.findAll();
 				if (users.size() < 1) {
 					System.out.println("There are no users found.");
@@ -129,9 +130,9 @@ public class ManagerMenu implements Menu {
 				System.out.println("***********************************************");
 				break;
 			case 4:
-				System.out.println("***********************************************");
+				System.out.println("********** SALON SERVICES *********************");
 				services = salonServiceServiceImpl.findAll();
-				System.out.println("All salon services details:");
+				System.out.println();
 				if (services.size() < 1) {
 					System.out.println("There are no services found.");
 				}
@@ -143,7 +144,8 @@ public class ManagerMenu implements Menu {
 				System.out.println("***********************************************");
 				break;
 			case 5:
-				System.out.println("***********************************************");
+				System.out.println("************* ADD NEW SALON SERVICE **************************");
+				System.out.println();
 				System.out.println("Enter service name:");
 				String serviceName = scanner.nextLine();
 				System.out.println("Enter service description:");
@@ -162,7 +164,8 @@ public class ManagerMenu implements Menu {
 				System.out.println("***********************************************");
 				break;
 			case 6:
-				System.out.println("***********************************************");
+				System.out.println("************* UPDATE EXISTING SERVICE *******************");
+				System.out.println();
 				services = salonServiceServiceImpl.findAll();
 				if (services.size() < 1) {
 					System.out.println("There are no services found.");
@@ -172,7 +175,7 @@ public class ManagerMenu implements Menu {
 						System.out.println((i + 1) + "- " + services.get(i));
 						System.out.println("-----------------------------------------------");
 					}
-					System.out.println("Please choose a service by number between 1 - " + services.size() + ":");
+					System.out.println("Please choose a service by number between 1 - " + services.size() + " to update:");
 					boolean flag = true;
 
 					int serviceNumber = 0;
@@ -213,7 +216,8 @@ public class ManagerMenu implements Menu {
 				System.out.println("***********************************************");
 				break;
 			case 7:
-				System.out.println("***********************************************");
+				System.out.println("************ DELETE A SALON SERVICE *********************");
+				System.out.println();
 				services = salonServiceServiceImpl.findAll();
 				if (services.size() < 1) {
 					System.out.println("There are no services found.");
@@ -222,7 +226,7 @@ public class ManagerMenu implements Menu {
 					for (int i = 0; i < services.size(); i++) {
 						System.out.println((i + 1) + "- " + services.get(i));
 					}
-					System.out.println("Please choose a service by number between 1 - " + services.size() + ":");
+					System.out.println("Please choose a service by number between 1 - " + services.size() + " to delete: ");
 					boolean flag = true;
 
 					int serviceNumber = 0;

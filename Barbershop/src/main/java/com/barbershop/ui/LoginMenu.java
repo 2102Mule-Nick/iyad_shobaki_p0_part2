@@ -13,6 +13,8 @@ public class LoginMenu implements Menu {
 	private Menu managerMenu;
 	private Menu nextMenu;
 
+	
+	// Constructor
 	public LoginMenu(User user, UserServiceImpl userServiceImpl, Menu customerMenu, Menu managerMenu) {
 		super();
 		this.user = user;
@@ -32,7 +34,10 @@ public class LoginMenu implements Menu {
 		System.out.println("\t------------    -------------------------------------     ------------");
 
 		// If admin want to login as customer he can
-		System.out.println("Enter 'admin' to login as admin or press enter to continue.");
+
+		System.out.println("==== Press enter to continue or enter 'ADMIN' to login as admin: ");
+
+
 		String answer = scanner.nextLine();
 
 		System.out.println("Please Enter Username");
@@ -40,6 +45,7 @@ public class LoginMenu implements Menu {
 		System.out.println("Please Enter Password");
 		String password = scanner.nextLine();
 		
+		// Two logging info
 		if (userServiceImpl.getUserInfo(username, password) != null) {
 			User authUser = userServiceImpl.getUserInfo(username, password);
 			this.user.setUserId(authUser.getUserId());
