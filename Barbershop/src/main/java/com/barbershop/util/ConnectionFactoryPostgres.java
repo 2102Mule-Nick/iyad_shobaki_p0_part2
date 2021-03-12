@@ -18,13 +18,12 @@ public final class ConnectionFactoryPostgres {
 
 	public static String PASSWORD;
 	
-	public static String DB_NAME = "";//"barbershop_test"; // "barbershop_db";
+	public static String DB_NAME = "";
 
 	private static ConnectionFactoryPostgres connectionFactory = null;
 
 	private ConnectionFactoryPostgres() {
 		
-//		URL = "jdbc:postgresql://" + System.getenv("BARBERSHOP_DB_URL") + ":5432/" + "barbershop_db" + "?";
 		URL = "jdbc:postgresql://" + System.getenv("BARBERSHOP_DB_URL") + ":5432/" + DB_NAME + "?";
 
 		USERNAME = System.getenv("BARBERSHOP_DB_USERNAME");
