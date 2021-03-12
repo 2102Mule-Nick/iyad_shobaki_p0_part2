@@ -38,8 +38,8 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 			try {
 
 			salonServices = new ArrayList<>();
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 
@@ -187,8 +187,8 @@ public class SalonServiceDaoPostgres implements SalonServiceDao<SalonService> {
 
 			try {
 
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 

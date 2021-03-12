@@ -32,14 +32,14 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 	@Override
 	public List<ManagerApptInfo> getAllUsersAppointmentsDetails() { // Manager
 
-		log.info(CLASS_NAME + ".findAll() -> An Attempt to get all appointments.");
+		log.info(CLASS_NAME + ".getAllUsersAppointmentsDetails() -> An Attempt to get all appointments.");
 
 //		String sql = "select * from appointment order by appointment_date, appointment_time desc";
 		String sql = "select a.appointment_id, ua.user_id, ua.first_name, ua.last_name, ua.email_address, ua.phone_number, "
 				+ "ua.user_role, ss.service_name, ss.duration , ss.price, a.appointment_date , a.appointment_time "
 				+ "from salon_service ss inner join appointment a on ss.service_id = a.service_id "
 				+ "inner join user_acc ua on ua.user_id = a.user_id "
-				+ "order by a.appointment_date , a.appointment_time desc";
+				+ "order by ua.email_address, a.appointment_date , a.appointment_time desc";
 
 		List<ManagerApptInfo> appointments = null;
 
@@ -48,8 +48,8 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		try {
 
 			appointments = new ArrayList<>();
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 
@@ -67,9 +67,9 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 			}
 
 		} catch (SQLException e) {
-			log.error(CLASS_NAME + ".findAll() -> Failure to get all appointments (SQLEXCEPTION)." + e.getMessage());
+			log.error(CLASS_NAME + ".getAllUsersAppointmentsDetails() -> Failure to get all appointments (SQLEXCEPTION)." + e.getMessage());
 		}
-		log.info(CLASS_NAME + ".findAll() -> A list of appointments returned successfully.");
+		log.info(CLASS_NAME + ".getAllUsersAppointmentsDetails() -> A list of appointments returned successfully.");
 		return appointments;
 	}
 
@@ -220,8 +220,8 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 		try {
 
 			appointments = new ArrayList<>();
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 
@@ -287,7 +287,7 @@ public class AppointmentDaoPostgres implements AppointmentDao<Appointment> {
 
 		PreparedStatement stmt = null;
 
-		String sql = "delete from appointment";
+		String sql = "delete from appointment where appointment_id <> 22";
 
 			try  {
 			stmt = connection.prepareStatement(sql);

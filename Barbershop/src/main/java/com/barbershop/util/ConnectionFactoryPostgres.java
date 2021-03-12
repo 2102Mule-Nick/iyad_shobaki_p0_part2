@@ -45,7 +45,7 @@ public final class ConnectionFactoryPostgres {
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-			log.info(CLASS_NAME + ".createConnection() -> Connecting to DB succeedded!");
+			log.info(CLASS_NAME + ".createConnection() -> Connecting to DB succeedded - Database Name: " + DB_NAME);
 			log.info("----------------------------------------------------------------------");
 			return conn;
 		} catch (SQLException e) {

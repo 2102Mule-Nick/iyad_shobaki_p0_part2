@@ -38,8 +38,8 @@ public class UserDaoPostgres implements UserDao<User> {
 			try {
 
 			users = new ArrayList<>();
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 
@@ -241,7 +241,7 @@ public class UserDaoPostgres implements UserDao<User> {
 		PreparedStatement stmt = null;
 
 		// Delete all except id # 1 to test appointment table Foreign key
-		String sql = "delete from user_acc where user_id != 1";
+		String sql = "delete from user_acc where user_id != 1 and user_id != 2";
 
 			try {
 			stmt = connection.prepareStatement(sql);

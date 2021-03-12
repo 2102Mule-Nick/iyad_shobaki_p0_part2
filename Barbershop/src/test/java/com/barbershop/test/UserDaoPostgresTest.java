@@ -1,18 +1,13 @@
 package com.barbershop.test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,23 +18,25 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.barbershop.dao.AppointmentDaoPostgres;
-import com.barbershop.pojo.Appointment;
+import com.barbershop.dao.UserDaoPostgres;
+import com.barbershop.pojo.SalonService;
+import com.barbershop.pojo.User;
 import com.barbershop.util.ConnectionFactoryPostgres;
 
 @ExtendWith(MockitoExtension.class)
-class AppointmentDaoPostgresTest {
+class UserDaoPostgresTest {
+
 
 	@Mock
 	private Connection fakeConnection;
-
-	private static AppointmentDaoPostgres daoPostgres;
-	private static Appointment appointment1;
-	private static Appointment appointment2;
-	private static Appointment appointment3;
-
+	
+	
+	private static UserDaoPostgres userDaoPostgres;
+	private static User user1;
+	private static User user2;
+	
 	private static Connection realConnection;
-
+	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		realConnection = ConnectionFactoryPostgres.getConnection("TestingDb");
@@ -47,23 +44,23 @@ class AppointmentDaoPostgresTest {
 
 	@BeforeEach
 	private void setUp() {
-		daoPostgres = new AppointmentDaoPostgres();
-		appointment1 = new Appointment(LocalDate.now().plusDays(1), LocalTime.now(), 1, 1);
-		appointment2 = new Appointment(LocalDate.now().plusDays(2), LocalTime.now(), 2, 1);
-		appointment3 = new Appointment(LocalDate.now().plusDays(3), LocalTime.now(), 1, 1);
+		userDaoPostgres = new UserDaoPostgres();
+		user1 = new User("Kevin", "Cains", "111-222-3344","kevin@cains.com", "Pwd12345@");
+		user2 = new User("Terra", "Dunne", "111-234-6666","terra@dunne.net", "Pwd12345@");
 	}
 
 	@AfterEach
 	private void tearDown() {
-		daoPostgres.setConnection(realConnection);
-		daoPostgres.deleteAll();
+		userDaoPostgres.setConnection(realConnection);
+		userDaoPostgres.deleteAll();
 	}
+
 
 	@Test
 	void testCreate() throws SQLException {
-
-		// creating a real stmt to be able to actually communicate with our db
-		String sql = "insert into appointment (appointment_date, appointment_time, user_id, service_id) values (? , ? , ? , ?)";
+		
+		String sql = "insert into user_acc (first_name, last_name, phone_number, email_address, user_role, user_password)"
+				+ " values (? , ? , ? , ?, ? , ?)";
 
 		PreparedStatement realStmt = realConnection.prepareStatement(sql);
 
@@ -77,43 +74,43 @@ class AppointmentDaoPostgresTest {
 		// a new statement inside of our createCart method, and we could not spy on it
 		when(fakeConnection.prepareStatement(sql)).thenReturn(spy);
 
-		daoPostgres.setConnection(fakeConnection);
+		userDaoPostgres.setConnection(fakeConnection);
 
 		// call the create cart method that we are testing
-		daoPostgres.create(appointment2);
+		userDaoPostgres.create(user1);
 
 		// verifying all the correct methods are being called on our REAL stmt
 		// this can only work because we are spying on the stmt
-		verify(spy).setDate(1, java.sql.Date.valueOf(appointment2.getAppointmentDate()));
-		verify(spy).setTime(2, java.sql.Time.valueOf(appointment2.getAppointmentTime()));
-		verify(spy).setInt(3, appointment2.getUserId());
-		verify(spy).setInt(4, appointment2.getServiceId());
+		
+		verify(spy).setString(1, user1.getFirstName());
+		verify(spy).setString(2, user1.getLastName());
+		verify(spy).setString(3, user1.getPhoneNumber());
+		verify(spy).setString(4, user1.getEmailAddress());
+		verify(spy).setString(5, user1.getRole());
+		verify(spy).setString(6, user1.getPassword());
+	
 
 		verify(spy).execute();
 
 		// making a second call to the db, to ensure that the cart was actually created
-		PreparedStatement checkStmt = realConnection.prepareStatement("select * from appointment where user_id = 2");
+		PreparedStatement checkStmt = realConnection.prepareStatement("select * from user_acc where email_address = 'kevin@cains.com'");
 
 		ResultSet rs = checkStmt.executeQuery();
 
 		assertTrue(rs.next());
-
 	}
-
+	
+	
 	@Test
-	void testGetAllUsersAppointmentsDetails() throws SQLException {
+	void testFindAll() throws SQLException {
 		
-		daoPostgres.setConnection(realConnection);
+		userDaoPostgres.setConnection(realConnection);
 
 		// call the create cart method that we are testing
-		daoPostgres.create(appointment1);
+		userDaoPostgres.create(user2);
 		
 		// creating a real stmt to be able to actually communicate with our db
-		String sql = "select a.appointment_id, ua.user_id, ua.first_name, ua.last_name, ua.email_address, ua.phone_number, "
-				+ "ua.user_role, ss.service_name, ss.duration , ss.price, a.appointment_date , a.appointment_time "
-				+ "from salon_service ss inner join appointment a on ss.service_id = a.service_id "
-				+ "inner join user_acc ua on ua.user_id = a.user_id "
-				+ "order by ua.email_address, a.appointment_date , a.appointment_time desc";
+		String sql = "select * from user_acc order by user_id asc";
 
 		PreparedStatement realStmt = realConnection.prepareStatement(sql);
 
@@ -127,9 +124,9 @@ class AppointmentDaoPostgresTest {
 		// a new statement inside of our createCart method, and we could not spy on it
 		when(fakeConnection.prepareStatement(sql)).thenReturn(spy);
 
-		daoPostgres.setConnection(fakeConnection);
+		userDaoPostgres.setConnection(fakeConnection);
 		// call the create cart method that we are testing
-		daoPostgres.getAllUsersAppointmentsDetails();
+		userDaoPostgres.findAll();
 
 
 		verify(spy).executeQuery();
@@ -140,59 +137,56 @@ class AppointmentDaoPostgresTest {
 
 		assertTrue(rs.next());
 	}
-
+	
 	@Test
 	void testUpdate() throws SQLException {
-
-		
 		
 		// creating a real stmt to be able to actually communicate with our db
-		// Date, time, service_id, appointment_id
-		String sql = "select update_appointment(?,?,?,?);";
+		String sql = "update user_acc set first_name = ?, last_name = ?, phone_number = ?, "
+				+ "email_address = ?, user_role = ?, user_password = ?  where user_id = ?";
 
 		// Calling a function
-		CallableStatement realStmt = realConnection.prepareCall(sql);
+		PreparedStatement realStmt = realConnection.prepareStatement(sql);
 
 		// Spying on our real stmt, so that we can later verify the correct methods are
 		// invoked
-		CallableStatement spy = Mockito.spy(realStmt);
+		PreparedStatement spy = Mockito.spy(realStmt);
 
 		// setting up our Mock connection, to reaturn our real stmt, we are spying on
 		// if we did not do this, and used a real connection on this test, the
 		// connection would create
 		// a new statement inside of our createCart method, and we could not spy on it
-		when(fakeConnection.prepareCall(sql)).thenReturn(spy);
+		when(fakeConnection.prepareStatement(sql)).thenReturn(spy);
 
-		daoPostgres.setConnection(fakeConnection);
+		userDaoPostgres.setConnection(fakeConnection);
 		// call the create cart method that we are testing
-		appointment1.setAppointmentId(22);
-		appointment1.setAppointmentDate(LocalDate.parse("2021-05-05"));
-		appointment1.setAppointmentTime(LocalTime.parse("03:00:00"));
-		daoPostgres.update(appointment1);
+		user1 = new User(2, "Update Test", "Update Testing", "999-999-9999", "update@testing.com","Test Role", "NewPassword");
+		userDaoPostgres.update(user1);
 
-
-		verify(spy).setDate(1, java.sql.Date.valueOf(appointment1.getAppointmentDate()));
-		verify(spy).setTime(2, java.sql.Time.valueOf(appointment1.getAppointmentTime()));
-		verify(spy).setInt(3, appointment1.getUserId());
-		verify(spy).setInt(4, appointment1.getAppointmentId());
+		verify(spy).setString(1, user1.getFirstName());
+		verify(spy).setString(2,user1.getLastName());
+		verify(spy).setString(3, user1.getPhoneNumber());
+		verify(spy).setString(4, user1.getEmailAddress());
+		verify(spy).setString(5, user1.getRole());
+		verify(spy).setString(6, user1.getPassword());
+		verify(spy).setInt(7, user1.getUserId());
+	
 		verify(spy).execute();
-		
+
 		// making a second call to the db, to ensure that the cart was actually created
-		PreparedStatement checkStmt = realConnection.prepareStatement("select * from appointment where appointment_date = '2021-05-05'");
+		PreparedStatement checkStmt = realConnection
+				.prepareStatement("select * from user_acc where email_address = 'update@testing.com'");
 
 		ResultSet rs = checkStmt.executeQuery();
 
 		assertTrue(rs.next());
 	}
-
+	
 	@Test
-	void testFindAll() {
-//		daoPostgres.create(appointment1);
-//		daoPostgres.create(appointment2);
-//		daoPostgres.create(appointment3);
-//
-//		assertEquals(3, daoPostgres.findAll().size());
+	void testUpdateUerRole() {
+		//fail("Not yet implemented");
 	}
+
 
 	@Test
 	void testDeleteById() {
@@ -200,12 +194,15 @@ class AppointmentDaoPostgresTest {
 	}
 
 	@Test
-	void testGetAllAppointmentsByUserId() {
+	void testIsExist() {
 		//fail("Not yet implemented");
 	}
 
 	@Test
-	void testGetAllAppointmentsTimeByDate() {
+	void testGetUserInfo() {
 		//fail("Not yet implemented");
 	}
+
+	
+
 }

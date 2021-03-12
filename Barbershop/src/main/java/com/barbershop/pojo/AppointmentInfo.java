@@ -3,6 +3,8 @@ package com.barbershop.pojo;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+// Hold the data that is coming from the inner join clause -- More info for the customer
+
 public class AppointmentInfo {
 	private int appointmentId;
 	private String serviceName;
